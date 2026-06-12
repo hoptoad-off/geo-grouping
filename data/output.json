@@ -1,0 +1,167 @@
+{
+  "destination": {
+    "lat": 41.3111,
+    "lng": 69.2797
+  },
+  "tierThresholds": {
+    "tier1MaxKm": 5,
+    "tier2MaxKm": 10
+  },
+  "totalGroups": 5,
+  "groups": [
+    {
+      "groupId": "group_001",
+      "points": [
+        {
+          "id": "p001",
+          "name": "Amir Timur Square Kiosk",
+          "lat": 41.3115,
+          "lng": 69.2802
+        },
+        {
+          "id": "p004",
+          "name": "Oybek Metro Station",
+          "lat": 41.2975,
+          "lng": 69.2733
+        },
+        {
+          "id": "p002",
+          "name": "Tashkent City Mall",
+          "lat": 41.3168,
+          "lng": 69.2491
+        }
+      ],
+      "centroid": {
+        "lat": 41.308600000000006,
+        "lng": 69.26753333333333
+      },
+      "distanceToDestination": 1.0535466387536097,
+      "tier": 1
+    },
+    {
+      "groupId": "group_002",
+      "points": [
+        {
+          "id": "p003",
+          "name": "Chorsu Bazaar",
+          "lat": 41.3265,
+          "lng": 69.2345
+        },
+        {
+          "id": "p013",
+          "name": "Qoraqamish Market",
+          "lat": 41.3623,
+          "lng": 69.1987
+        },
+        {
+          "id": "p005",
+          "name": "Magic City Park",
+          "lat": 41.2842,
+          "lng": 69.2294
+        }
+      ],
+      "centroid": {
+        "lat": 41.324333333333335,
+        "lng": 69.22086666666667
+      },
+      "distanceToDestination": 5.1290209299502925,
+      "tier": 2
+    },
+    {
+      "groupId": "group_003",
+      "points": [
+        {
+          "id": "p006",
+          "name": "Yunusabad District Office",
+          "lat": 41.3645,
+          "lng": 69.2861
+        },
+        {
+          "id": "p008",
+          "name": "Botanical Garden Gate",
+          "lat": 41.3417,
+          "lng": 69.3082
+        },
+        {
+          "id": "p007",
+          "name": "TV Tower Cafe",
+          "lat": 41.3508,
+          "lng": 69.2864
+        }
+      ],
+      "centroid": {
+        "lat": 41.35233333333333,
+        "lng": 69.29356666666666
+      },
+      "distanceToDestination": 4.728866900074162,
+      "tier": 1
+    },
+    {
+      "groupId": "group_004",
+      "points": [
+        {
+          "id": "p009",
+          "name": "Sergeli Auto Market",
+          "lat": 41.2218,
+          "lng": 69.2226
+        },
+        {
+          "id": "p012",
+          "name": "Sergeli Housing Block 14",
+          "lat": 41.2154,
+          "lng": 69.2331
+        },
+        {
+          "id": "p011",
+          "name": "Sergeli Bus Terminal",
+          "lat": 41.2265,
+          "lng": 69.2102
+        }
+      ],
+      "centroid": {
+        "lat": 41.22123333333334,
+        "lng": 69.22196666666666
+      },
+      "distanceToDestination": 11.096776655271396,
+      "tier": 3
+    },
+    {
+      "groupId": "group_005",
+      "points": [
+        {
+          "id": "p010",
+          "name": "Kuyluk Bazaar",
+          "lat": 41.2386,
+          "lng": 69.3471
+        },
+        {
+          "id": "p016",
+          "name": "Buyuk Ipak Yuli Bazaar",
+          "lat": 41.3286,
+          "lng": 69.3712
+        },
+        {
+          "id": "p014",
+          "name": "Mirzo Ulugbek Clinic",
+          "lat": 41.3389,
+          "lng": 69.3346
+        }
+      ],
+      "centroid": {
+        "lat": 41.302033333333334,
+        "lng": 69.35096666666666
+      },
+      "distanceToDestination": 6.037555126952049,
+      "tier": 2
+    }
+  ],
+  "unassigned": [
+    {
+      "id": "p015",
+      "name": "TashMI Crossroads Shop",
+      "lat": 41.3712,
+      "lng": 69.3528
+    }
+  ],
+  "generatedAt": "2026-06-12T11:23:26.224Z"
+}
