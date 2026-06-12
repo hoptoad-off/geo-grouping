@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Geo Grouping — карта групп</title>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="/viewer/vendor/leaflet/leaflet.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: system-ui, -apple-system, sans-serif; height: 100vh; display: flex; }
+    #sidebar {
+      width: 320px; min-width: 320px; height: 100vh; overflow-y: auto;
+      background: #1e1e2e; color: #e0e0e0; padding: 16px;
+    }
+    #sidebar h1 { font-size: 18px; margin-bottom: 4px; }
+    #sidebar .meta { font-size: 12px; color: #9090a0; margin-bottom: 16px; }
+    .legend { font-size: 13px; margin-bottom: 16px; line-height: 1.8; }
+    .dot {
+      display: inline-block; width: 12px; height: 12px; border-radius: 50%;
+      margin-right: 6px; vertical-align: middle;
+    }
+    .group-card {
+      background: #2a2a3c; border-radius: 8px; padding: 10px 12px;
+      margin-bottom: 10px; cursor: pointer; border-left: 4px solid transparent;
+      transition: background 0.15s;
+    }
+    .group-card:hover { background: #34344a; }
+    .group-card h2 { font-size: 14px; margin-bottom: 4px; }
+    .group-card .dist { font-size: 12px; color: #b0b0c0; margin-bottom: 6px; }
+    .group-card ul { list-style: none; font-size: 12px; color: #c8c8d8; }
+    .group-card li { padding: 1px 0; }
+    .tier-badge {
+      font-size: 11px; font-weight: 600; padding: 1px 8px; border-radius: 10px;
+      color: #fff; float: right;
+    }
+    #map { flex: 1; height: 100vh; }
+    .centroid-icon {
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 700; font-size: 11px;
+      border-radius: 50%; border: 2px solid #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    }
+    .dest-icon { font-size: 26px; line-height: 26px; text-shadow: 0 1px 3px rgba(0,0,0,0.6); }
+    #error {
+      position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
+      background: #c62828; color: #fff; padding: 10px 18px; border-radius: 6px;
+      display: none; z-index: 2000;
+    }
+  </style>
+</head>
+<body>
+  <div id="sidebar">
+    <h1>Geo Grouping</h1>
+    <div class="meta" id="meta">Загрузка…</div>
+    <div class="legend">
+      <div><span class="dot" style="background:#2e7d32"></span>Tier 1 — ближе 5 км</div>
+      <div><span class="dot" style="background:#f9a825"></span>Tier 2 — 5–10 км</div>
+      <div><span class="dot" style="background:#c62828"></span>Tier 3 — дальше 10 км</div>
+      <div><span class="dot" style="background:#757575"></span>Нераспределённые</div>
+      <div>⭐ Пункт назначения</div>
+    </div>
+    <div id="groups"></div>
+  </div>
+  <div id="map"></div>
+  <div id="error"></div>
+
+  <script src="/viewer/vendor/leaflet/leaflet.js"></script>
+  <script>
+    const TIER_COLORS = { 1: '#2e7d32', 2: '#f9a825', 3: '#c62828' };
+    const UNASSIGNED_COLOR = '#757575';
+
+    // initial view must be set BEFORE any layers are added,
+    // otherwise Leaflet's renderer crashes; fitBounds refines it later
+    const map = L.map('map', { preferCanvas: true }).setView([41.3111, 69.2797], 11);
+    const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    // if OSM tiles fail repeatedly, switch to Carto once
+    let tileErrors = 0, switched = false;
+    osm.on('tileerror', () => {
+      if (switched || ++tileErrors < 4) return;
+      switched = true;
+      map.removeLayer(osm);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap &copy; CARTO'
+      }).addTo(map);
+    });
+
+    function showError(msg) {
+      const el = document.getElementById('error');
+      el.textContent = msg;
+      el.style.display = 'block';
+    }
+
+    async function init() {
+      let result;
+      try {
+        const resp = await fetch('/data/output.json');
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        result = await resp.json();
+      } catch (e) {
+        showError('Не удалось загрузить data/output.json: ' + e.message +
+          '. Сначала выполните npm start, затем запустите страницу через npm run viz.');
+        map.setView([41.3111, 69.2797], 11);
+        return;
+      }
+
+      const allLatLngs = [];
+      const groupLayers = {};
+
+      // Destination star
+      const dest = result.destination;
+      L.marker([dest.lat, dest.lng], {
+        icon: L.divIcon({ className: 'dest-icon', html: '⭐', iconSize: [26, 26], iconAnchor: [13, 13] })
+      }).addTo(map).bindPopup(
+        '<b>Пункт назначения</b><br>' + dest.lat.toFixed(4) + ', ' + dest.lng.toFixed(4)
+      );
+      allLatLngs.push([dest.lat, dest.lng]);
+
+      for (const group of result.groups) {
+        const color = TIER_COLORS[group.tier];
+        const layer = L.featureGroup().addTo(map);
+        groupLayers[group.groupId] = layer;
+
+        for (const p of group.points) {
+          allLatLngs.push([p.lat, p.lng]);
+          L.circleMarker([p.lat, p.lng], {
+            radius: 7, color: '#fff', weight: 1.5, fillColor: color, fillOpacity: 0.95
+          }).addTo(layer).bindPopup(
+            '<b>' + p.name + '</b><br>id: ' + p.id +
+            '<br>' + p.lat.toFixed(4) + ', ' + p.lng.toFixed(4) +
+            '<br>Группа: ' + group.groupId + ' (Tier ' + group.tier + ')'
+          );
+          // spoke from centroid to each member point
+          L.polyline([[group.centroid.lat, group.centroid.lng], [p.lat, p.lng]], {
+            color, weight: 1.5, opacity: 0.6, dashArray: '4 4'
+          }).addTo(layer);
+        }
+
+        const num = group.groupId.replace(/^group_0*/, '');
+        L.marker([group.centroid.lat, group.centroid.lng], {
+          icon: L.divIcon({
+            className: 'centroid-icon',
+            html: '<div class="centroid-icon" style="width:24px;height:24px;background:' + color + '">' + num + '</div>',
+            iconSize: [24, 24], iconAnchor: [12, 12]
+          })
+        }).addTo(layer).bindPopup(
+          '<b>' + group.groupId + '</b> — Tier ' + group.tier +
+          '<br>До назначения: ' + group.distanceToDestination.toFixed(2) + ' км' +
+          '<br>Точки: ' + group.points.map(p => p.name).join(', ')
+        );
+      }
+
+      for (const p of result.unassigned) {
+        allLatLngs.push([p.lat, p.lng]);
+        L.circleMarker([p.lat, p.lng], {
+          radius: 7, color: '#fff', weight: 1.5, fillColor: UNASSIGNED_COLOR, fillOpacity: 0.95
+        }).addTo(map).bindPopup('<b>' + p.name + '</b><br>id: ' + p.id + '<br><i>Нераспределена</i>');
+      }
+
+      map.fitBounds(allLatLngs, { padding: [40, 40] });
+
+      // Sidebar
+      const tierCounts = { 1: 0, 2: 0, 3: 0 };
+      result.groups.forEach(g => tierCounts[g.tier]++);
+      document.getElementById('meta').innerHTML =
+        'Групп: ' + result.totalGroups +
+        ' (T1: ' + tierCounts[1] + ', T2: ' + tierCounts[2] + ', T3: ' + tierCounts[3] + ')' +
+        ' · Нераспределено: ' + result.unassigned.length +
+        '<br>Сгенерировано: ' + new Date(result.generatedAt).toLocaleString('ru-RU');
+
+      const container = document.getElementById('groups');
+      for (const group of result.groups) {
+        const color = TIER_COLORS[group.tier];
+        const card = document.createElement('div');
+        card.className = 'group-card';
+        card.style.borderLeftColor = color;
+        card.innerHTML =
+          '<h2>' + group.groupId +
+          '<span class="tier-badge" style="background:' + color + '">Tier ' + group.tier + '</span></h2>' +
+          '<div class="dist">' + group.distanceToDestination.toFixed(2) + ' км до назначения</div>' +
+          '<ul>' + group.points.map(p => '<li>• ' + p.name + '</li>').join('') + '</ul>';
+        card.addEventListener('click', () => {
+          map.fitBounds(groupLayers[group.groupId].getBounds(), { padding: [60, 60], maxZoom: 15 });
+        });
+        container.appendChild(card);
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
