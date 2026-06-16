@@ -1,18 +1,3098 @@
 [
-  { "id": "p001", "name": "Amir Timur Square Kiosk", "lat": 41.3115, "lng": 69.2802 },
-  { "id": "p002", "name": "Tashkent City Mall", "lat": 41.3168, "lng": 69.2491 },
-  { "id": "p003", "name": "Chorsu Bazaar", "lat": 41.3265, "lng": 69.2345 },
-  { "id": "p004", "name": "Oybek Metro Station", "lat": 41.2975, "lng": 69.2733 },
-  { "id": "p005", "name": "Magic City Park", "lat": 41.2842, "lng": 69.2294 },
-  { "id": "p006", "name": "Yunusabad District Office", "lat": 41.3645, "lng": 69.2861 },
-  { "id": "p007", "name": "TV Tower Cafe", "lat": 41.3508, "lng": 69.2864 },
-  { "id": "p008", "name": "Botanical Garden Gate", "lat": 41.3417, "lng": 69.3082 },
-  { "id": "p009", "name": "Sergeli Auto Market", "lat": 41.2218, "lng": 69.2226 },
-  { "id": "p010", "name": "Kuyluk Bazaar", "lat": 41.2386, "lng": 69.3471 },
-  { "id": "p011", "name": "Sergeli Bus Terminal", "lat": 41.2265, "lng": 69.2102 },
-  { "id": "p012", "name": "Sergeli Housing Block 14", "lat": 41.2154, "lng": 69.2331 },
-  { "id": "p013", "name": "Qoraqamish Market", "lat": 41.3623, "lng": 69.1987 },
-  { "id": "p014", "name": "Mirzo Ulugbek Clinic", "lat": 41.3389, "lng": 69.3346 },
-  { "id": "p015", "name": "TashMI Crossroads Shop", "lat": 41.3712, "lng": 69.3528 },
-  { "id": "p016", "name": "Buyuk Ipak Yuli Bazaar", "lat": 41.3286, "lng": 69.3712 }
+  {
+    "id": "p001",
+    "name": "Amir Timur Square Kiosk",
+    "lat": 41.3115,
+    "lng": 69.2802
+  },
+  {
+    "id": "p002",
+    "name": "Tashkent City Mall",
+    "lat": 41.3168,
+    "lng": 69.2491
+  },
+  {
+    "id": "p003",
+    "name": "Chorsu Bazaar",
+    "lat": 41.3265,
+    "lng": 69.2345
+  },
+  {
+    "id": "p004",
+    "name": "Oybek Metro Station",
+    "lat": 41.2975,
+    "lng": 69.2733
+  },
+  {
+    "id": "p005",
+    "name": "Magic City Park",
+    "lat": 41.2842,
+    "lng": 69.2294
+  },
+  {
+    "id": "p006",
+    "name": "Yunusabad District Office",
+    "lat": 41.3645,
+    "lng": 69.2861
+  },
+  {
+    "id": "p007",
+    "name": "TV Tower Cafe",
+    "lat": 41.3508,
+    "lng": 69.2864
+  },
+  {
+    "id": "p008",
+    "name": "Botanical Garden Gate",
+    "lat": 41.3417,
+    "lng": 69.3082
+  },
+  {
+    "id": "p009",
+    "name": "Sergeli Auto Market",
+    "lat": 41.2218,
+    "lng": 69.2226
+  },
+  {
+    "id": "p010",
+    "name": "Kuyluk Bazaar",
+    "lat": 41.2386,
+    "lng": 69.3471
+  },
+  {
+    "id": "p011",
+    "name": "Sergeli Bus Terminal",
+    "lat": 41.2265,
+    "lng": 69.2102
+  },
+  {
+    "id": "p012",
+    "name": "Sergeli Housing Block 14",
+    "lat": 41.2154,
+    "lng": 69.2331
+  },
+  {
+    "id": "p013",
+    "name": "Qoraqamish Market",
+    "lat": 41.3623,
+    "lng": 69.1987
+  },
+  {
+    "id": "p014",
+    "name": "Mirzo Ulugbek Clinic",
+    "lat": 41.3389,
+    "lng": 69.3346
+  },
+  {
+    "id": "p015",
+    "name": "TashMI Crossroads Shop",
+    "lat": 41.3712,
+    "lng": 69.3528
+  },
+  {
+    "id": "p016",
+    "name": "Buyuk Ipak Yuli Bazaar",
+    "lat": 41.3286,
+    "lng": 69.3712
+  },
+  {
+    "id": "p017",
+    "name": "Chilanzar Cafe #17",
+    "lat": 41.2635,
+    "lng": 69.3174
+  },
+  {
+    "id": "p018",
+    "name": "Uchtepa School #18",
+    "lat": 41.2665,
+    "lng": 69.194
+  },
+  {
+    "id": "p019",
+    "name": "Chilanzar School #19",
+    "lat": 41.2463,
+    "lng": 69.1881
+  },
+  {
+    "id": "p020",
+    "name": "Mirzo Ulugbek Clinic #20",
+    "lat": 41.2193,
+    "lng": 69.2655
+  },
+  {
+    "id": "p021",
+    "name": "Mirzo Ulugbek Cafe #21",
+    "lat": 41.3755,
+    "lng": 69.3039
+  },
+  {
+    "id": "p022",
+    "name": "Sergeli Pharmacy #22",
+    "lat": 41.3464,
+    "lng": 69.1359
+  },
+  {
+    "id": "p023",
+    "name": "Bektemir Clinic #23",
+    "lat": 41.3247,
+    "lng": 69.1298
+  },
+  {
+    "id": "p024",
+    "name": "Uchtepa Office #24",
+    "lat": 41.3411,
+    "lng": 69.3579
+  },
+  {
+    "id": "p025",
+    "name": "Mirzo Ulugbek Shop #25",
+    "lat": 41.2158,
+    "lng": 69.2319
+  },
+  {
+    "id": "p026",
+    "name": "Uchtepa Shop #26",
+    "lat": 41.3034,
+    "lng": 69.149
+  },
+  {
+    "id": "p027",
+    "name": "Mirabad Warehouse #27",
+    "lat": 41.2593,
+    "lng": 69.194
+  },
+  {
+    "id": "p028",
+    "name": "Bektemir School #28",
+    "lat": 41.2843,
+    "lng": 69.3406
+  },
+  {
+    "id": "p029",
+    "name": "Chilanzar School #29",
+    "lat": 41.3943,
+    "lng": 69.1331
+  },
+  {
+    "id": "p030",
+    "name": "Mirzo Ulugbek Shop #30",
+    "lat": 41.2751,
+    "lng": 69.3388
+  },
+  {
+    "id": "p031",
+    "name": "Olmazor Office #31",
+    "lat": 41.212,
+    "lng": 69.1644
+  },
+  {
+    "id": "p032",
+    "name": "Mirabad Warehouse #32",
+    "lat": 41.2081,
+    "lng": 69.3666
+  },
+  {
+    "id": "p033",
+    "name": "Mirzo Ulugbek Office #33",
+    "lat": 41.2908,
+    "lng": 69.3914
+  },
+  {
+    "id": "p034",
+    "name": "Bektemir Clinic #34",
+    "lat": 41.2096,
+    "lng": 69.2763
+  },
+  {
+    "id": "p035",
+    "name": "Uchtepa School #35",
+    "lat": 41.2037,
+    "lng": 69.2861
+  },
+  {
+    "id": "p036",
+    "name": "Mirzo Ulugbek Market #36",
+    "lat": 41.3108,
+    "lng": 69.1085
+  },
+  {
+    "id": "p037",
+    "name": "Yakkasaray Shop #37",
+    "lat": 41.35,
+    "lng": 69.1577
+  },
+  {
+    "id": "p038",
+    "name": "Yakkasaray School #38",
+    "lat": 41.3888,
+    "lng": 69.2164
+  },
+  {
+    "id": "p039",
+    "name": "Shaykhantakhur Office #39",
+    "lat": 41.2382,
+    "lng": 69.1395
+  },
+  {
+    "id": "p040",
+    "name": "Shaykhantakhur Office #40",
+    "lat": 41.2613,
+    "lng": 69.3074
+  },
+  {
+    "id": "p041",
+    "name": "Bektemir Pharmacy #41",
+    "lat": 41.2501,
+    "lng": 69.1178
+  },
+  {
+    "id": "p042",
+    "name": "Uchtepa School #42",
+    "lat": 41.2107,
+    "lng": 69.2706
+  },
+  {
+    "id": "p043",
+    "name": "Yakkasaray Market #43",
+    "lat": 41.3068,
+    "lng": 69.2475
+  },
+  {
+    "id": "p044",
+    "name": "Chilanzar Market #44",
+    "lat": 41.2994,
+    "lng": 69.3851
+  },
+  {
+    "id": "p045",
+    "name": "Mirabad Cafe #45",
+    "lat": 41.2171,
+    "lng": 69.3429
+  },
+  {
+    "id": "p046",
+    "name": "Olmazor Pharmacy #46",
+    "lat": 41.3226,
+    "lng": 69.1957
+  },
+  {
+    "id": "p047",
+    "name": "Uchtepa School #47",
+    "lat": 41.3792,
+    "lng": 69.1694
+  },
+  {
+    "id": "p048",
+    "name": "Sergeli Clinic #48",
+    "lat": 41.3919,
+    "lng": 69.3162
+  },
+  {
+    "id": "p049",
+    "name": "Yashnabad Warehouse #49",
+    "lat": 41.2186,
+    "lng": 69.3316
+  },
+  {
+    "id": "p050",
+    "name": "Yakkasaray Warehouse #50",
+    "lat": 41.2741,
+    "lng": 69.3891
+  },
+  {
+    "id": "p051",
+    "name": "Sergeli School #51",
+    "lat": 41.2301,
+    "lng": 69.2586
+  },
+  {
+    "id": "p052",
+    "name": "Chilanzar Shop #52",
+    "lat": 41.2381,
+    "lng": 69.3184
+  },
+  {
+    "id": "p053",
+    "name": "Olmazor Market #53",
+    "lat": 41.3286,
+    "lng": 69.1443
+  },
+  {
+    "id": "p054",
+    "name": "Uchtepa Warehouse #54",
+    "lat": 41.2073,
+    "lng": 69.3104
+  },
+  {
+    "id": "p055",
+    "name": "Yashnabad Cafe #55",
+    "lat": 41.3682,
+    "lng": 69.2413
+  },
+  {
+    "id": "p056",
+    "name": "Yakkasaray Cafe #56",
+    "lat": 41.336,
+    "lng": 69.2364
+  },
+  {
+    "id": "p057",
+    "name": "Yunusabad Warehouse #57",
+    "lat": 41.2738,
+    "lng": 69.2139
+  },
+  {
+    "id": "p058",
+    "name": "Chilanzar Pharmacy #58",
+    "lat": 41.2076,
+    "lng": 69.1971
+  },
+  {
+    "id": "p059",
+    "name": "Olmazor Warehouse #59",
+    "lat": 41.2078,
+    "lng": 69.3944
+  },
+  {
+    "id": "p060",
+    "name": "Sergeli Pharmacy #60",
+    "lat": 41.2697,
+    "lng": 69.1577
+  },
+  {
+    "id": "p061",
+    "name": "Yunusabad Office #61",
+    "lat": 41.3135,
+    "lng": 69.2292
+  },
+  {
+    "id": "p062",
+    "name": "Shaykhantakhur Warehouse #62",
+    "lat": 41.2299,
+    "lng": 69.3321
+  },
+  {
+    "id": "p063",
+    "name": "Mirabad Warehouse #63",
+    "lat": 41.233,
+    "lng": 69.3562
+  },
+  {
+    "id": "p064",
+    "name": "Sergeli Pharmacy #64",
+    "lat": 41.3992,
+    "lng": 69.2572
+  },
+  {
+    "id": "p065",
+    "name": "Chilanzar School #65",
+    "lat": 41.2006,
+    "lng": 69.326
+  },
+  {
+    "id": "p066",
+    "name": "Yashnabad Clinic #66",
+    "lat": 41.2138,
+    "lng": 69.189
+  },
+  {
+    "id": "p067",
+    "name": "Shaykhantakhur Office #67",
+    "lat": 41.2107,
+    "lng": 69.1776
+  },
+  {
+    "id": "p068",
+    "name": "Sergeli School #68",
+    "lat": 41.3195,
+    "lng": 69.2407
+  },
+  {
+    "id": "p069",
+    "name": "Yakkasaray Market #69",
+    "lat": 41.2688,
+    "lng": 69.1207
+  },
+  {
+    "id": "p070",
+    "name": "Bektemir Pharmacy #70",
+    "lat": 41.3897,
+    "lng": 69.3815
+  },
+  {
+    "id": "p071",
+    "name": "Mirabad School #71",
+    "lat": 41.2451,
+    "lng": 69.234
+  },
+  {
+    "id": "p072",
+    "name": "Yashnabad Shop #72",
+    "lat": 41.2301,
+    "lng": 69.1246
+  },
+  {
+    "id": "p073",
+    "name": "Shaykhantakhur Cafe #73",
+    "lat": 41.3774,
+    "lng": 69.394
+  },
+  {
+    "id": "p074",
+    "name": "Uchtepa Shop #74",
+    "lat": 41.3259,
+    "lng": 69.1286
+  },
+  {
+    "id": "p075",
+    "name": "Yashnabad Shop #75",
+    "lat": 41.2489,
+    "lng": 69.2043
+  },
+  {
+    "id": "p076",
+    "name": "Olmazor Pharmacy #76",
+    "lat": 41.3013,
+    "lng": 69.2899
+  },
+  {
+    "id": "p077",
+    "name": "Yakkasaray Clinic #77",
+    "lat": 41.3793,
+    "lng": 69.3293
+  },
+  {
+    "id": "p078",
+    "name": "Yakkasaray Clinic #78",
+    "lat": 41.2669,
+    "lng": 69.125
+  },
+  {
+    "id": "p079",
+    "name": "Yakkasaray Clinic #79",
+    "lat": 41.3727,
+    "lng": 69.1636
+  },
+  {
+    "id": "p080",
+    "name": "Mirabad Warehouse #80",
+    "lat": 41.2269,
+    "lng": 69.3351
+  },
+  {
+    "id": "p081",
+    "name": "Bektemir Office #81",
+    "lat": 41.3481,
+    "lng": 69.1688
+  },
+  {
+    "id": "p082",
+    "name": "Sergeli Pharmacy #82",
+    "lat": 41.2249,
+    "lng": 69.1248
+  },
+  {
+    "id": "p083",
+    "name": "Shaykhantakhur Market #83",
+    "lat": 41.3533,
+    "lng": 69.3205
+  },
+  {
+    "id": "p084",
+    "name": "Yakkasaray School #84",
+    "lat": 41.3816,
+    "lng": 69.2378
+  },
+  {
+    "id": "p085",
+    "name": "Uchtepa Market #85",
+    "lat": 41.2565,
+    "lng": 69.1418
+  },
+  {
+    "id": "p086",
+    "name": "Chilanzar Clinic #86",
+    "lat": 41.246,
+    "lng": 69.3059
+  },
+  {
+    "id": "p087",
+    "name": "Uchtepa Cafe #87",
+    "lat": 41.3222,
+    "lng": 69.2809
+  },
+  {
+    "id": "p088",
+    "name": "Mirabad Market #88",
+    "lat": 41.3228,
+    "lng": 69.1237
+  },
+  {
+    "id": "p089",
+    "name": "Olmazor Market #89",
+    "lat": 41.3551,
+    "lng": 69.3779
+  },
+  {
+    "id": "p090",
+    "name": "Olmazor Shop #90",
+    "lat": 41.3528,
+    "lng": 69.3076
+  },
+  {
+    "id": "p091",
+    "name": "Uchtepa Warehouse #91",
+    "lat": 41.2367,
+    "lng": 69.3157
+  },
+  {
+    "id": "p092",
+    "name": "Mirzo Ulugbek Warehouse #92",
+    "lat": 41.3486,
+    "lng": 69.3336
+  },
+  {
+    "id": "p093",
+    "name": "Uchtepa Office #93",
+    "lat": 41.3371,
+    "lng": 69.1568
+  },
+  {
+    "id": "p094",
+    "name": "Sergeli Pharmacy #94",
+    "lat": 41.323,
+    "lng": 69.3299
+  },
+  {
+    "id": "p095",
+    "name": "Olmazor Warehouse #95",
+    "lat": 41.3584,
+    "lng": 69.1115
+  },
+  {
+    "id": "p096",
+    "name": "Sergeli Office #96",
+    "lat": 41.3435,
+    "lng": 69.1592
+  },
+  {
+    "id": "p097",
+    "name": "Olmazor Office #97",
+    "lat": 41.2195,
+    "lng": 69.2491
+  },
+  {
+    "id": "p098",
+    "name": "Mirzo Ulugbek Clinic #98",
+    "lat": 41.2892,
+    "lng": 69.2159
+  },
+  {
+    "id": "p099",
+    "name": "Sergeli School #99",
+    "lat": 41.281,
+    "lng": 69.2047
+  },
+  {
+    "id": "p100",
+    "name": "Mirzo Ulugbek Market #100",
+    "lat": 41.262,
+    "lng": 69.1117
+  },
+  {
+    "id": "p101",
+    "name": "Mirzo Ulugbek Market #101",
+    "lat": 41.2164,
+    "lng": 69.2801
+  },
+  {
+    "id": "p102",
+    "name": "Olmazor Office #102",
+    "lat": 41.2956,
+    "lng": 69.27
+  },
+  {
+    "id": "p103",
+    "name": "Mirabad Clinic #103",
+    "lat": 41.2696,
+    "lng": 69.2839
+  },
+  {
+    "id": "p104",
+    "name": "Olmazor Shop #104",
+    "lat": 41.2155,
+    "lng": 69.1087
+  },
+  {
+    "id": "p105",
+    "name": "Chilanzar Shop #105",
+    "lat": 41.3928,
+    "lng": 69.2528
+  },
+  {
+    "id": "p106",
+    "name": "Yunusabad Cafe #106",
+    "lat": 41.2046,
+    "lng": 69.1087
+  },
+  {
+    "id": "p107",
+    "name": "Sergeli Warehouse #107",
+    "lat": 41.2725,
+    "lng": 69.2489
+  },
+  {
+    "id": "p108",
+    "name": "Yashnabad Warehouse #108",
+    "lat": 41.3743,
+    "lng": 69.1763
+  },
+  {
+    "id": "p109",
+    "name": "Yashnabad Clinic #109",
+    "lat": 41.2035,
+    "lng": 69.3184
+  },
+  {
+    "id": "p110",
+    "name": "Mirzo Ulugbek Cafe #110",
+    "lat": 41.2982,
+    "lng": 69.247
+  },
+  {
+    "id": "p111",
+    "name": "Yashnabad Clinic #111",
+    "lat": 41.3191,
+    "lng": 69.2056
+  },
+  {
+    "id": "p112",
+    "name": "Uchtepa Clinic #112",
+    "lat": 41.2753,
+    "lng": 69.2223
+  },
+  {
+    "id": "p113",
+    "name": "Uchtepa School #113",
+    "lat": 41.3474,
+    "lng": 69.1741
+  },
+  {
+    "id": "p114",
+    "name": "Bektemir Cafe #114",
+    "lat": 41.2811,
+    "lng": 69.3963
+  },
+  {
+    "id": "p115",
+    "name": "Uchtepa Cafe #115",
+    "lat": 41.2826,
+    "lng": 69.1103
+  },
+  {
+    "id": "p116",
+    "name": "Chilanzar Pharmacy #116",
+    "lat": 41.3516,
+    "lng": 69.2766
+  },
+  {
+    "id": "p117",
+    "name": "Mirabad Cafe #117",
+    "lat": 41.2553,
+    "lng": 69.3511
+  },
+  {
+    "id": "p118",
+    "name": "Yunusabad Office #118",
+    "lat": 41.3621,
+    "lng": 69.1045
+  },
+  {
+    "id": "p119",
+    "name": "Shaykhantakhur Clinic #119",
+    "lat": 41.252,
+    "lng": 69.3257
+  },
+  {
+    "id": "p120",
+    "name": "Uchtepa Market #120",
+    "lat": 41.271,
+    "lng": 69.2054
+  },
+  {
+    "id": "p121",
+    "name": "Uchtepa Pharmacy #121",
+    "lat": 41.3545,
+    "lng": 69.2303
+  },
+  {
+    "id": "p122",
+    "name": "Yakkasaray Market #122",
+    "lat": 41.332,
+    "lng": 69.2337
+  },
+  {
+    "id": "p123",
+    "name": "Sergeli Shop #123",
+    "lat": 41.2888,
+    "lng": 69.2461
+  },
+  {
+    "id": "p124",
+    "name": "Shaykhantakhur Cafe #124",
+    "lat": 41.2865,
+    "lng": 69.1401
+  },
+  {
+    "id": "p125",
+    "name": "Sergeli Cafe #125",
+    "lat": 41.3715,
+    "lng": 69.3095
+  },
+  {
+    "id": "p126",
+    "name": "Bektemir Market #126",
+    "lat": 41.3545,
+    "lng": 69.1321
+  },
+  {
+    "id": "p127",
+    "name": "Sergeli Clinic #127",
+    "lat": 41.2606,
+    "lng": 69.3954
+  },
+  {
+    "id": "p128",
+    "name": "Mirzo Ulugbek Shop #128",
+    "lat": 41.2123,
+    "lng": 69.138
+  },
+  {
+    "id": "p129",
+    "name": "Bektemir Clinic #129",
+    "lat": 41.2403,
+    "lng": 69.3129
+  },
+  {
+    "id": "p130",
+    "name": "Mirabad Market #130",
+    "lat": 41.361,
+    "lng": 69.3098
+  },
+  {
+    "id": "p131",
+    "name": "Chilanzar Clinic #131",
+    "lat": 41.3946,
+    "lng": 69.2499
+  },
+  {
+    "id": "p132",
+    "name": "Shaykhantakhur Warehouse #132",
+    "lat": 41.3725,
+    "lng": 69.1079
+  },
+  {
+    "id": "p133",
+    "name": "Yakkasaray Pharmacy #133",
+    "lat": 41.3702,
+    "lng": 69.1752
+  },
+  {
+    "id": "p134",
+    "name": "Uchtepa Shop #134",
+    "lat": 41.338,
+    "lng": 69.3171
+  },
+  {
+    "id": "p135",
+    "name": "Yashnabad Clinic #135",
+    "lat": 41.3431,
+    "lng": 69.353
+  },
+  {
+    "id": "p136",
+    "name": "Shaykhantakhur Shop #136",
+    "lat": 41.2595,
+    "lng": 69.1539
+  },
+  {
+    "id": "p137",
+    "name": "Mirzo Ulugbek Shop #137",
+    "lat": 41.2965,
+    "lng": 69.2724
+  },
+  {
+    "id": "p138",
+    "name": "Shaykhantakhur Clinic #138",
+    "lat": 41.3218,
+    "lng": 69.3748
+  },
+  {
+    "id": "p139",
+    "name": "Sergeli Market #139",
+    "lat": 41.2779,
+    "lng": 69.2033
+  },
+  {
+    "id": "p140",
+    "name": "Shaykhantakhur Pharmacy #140",
+    "lat": 41.3555,
+    "lng": 69.1604
+  },
+  {
+    "id": "p141",
+    "name": "Yashnabad Pharmacy #141",
+    "lat": 41.2802,
+    "lng": 69.1768
+  },
+  {
+    "id": "p142",
+    "name": "Olmazor Clinic #142",
+    "lat": 41.3902,
+    "lng": 69.3851
+  },
+  {
+    "id": "p143",
+    "name": "Mirabad Warehouse #143",
+    "lat": 41.2856,
+    "lng": 69.1853
+  },
+  {
+    "id": "p144",
+    "name": "Mirabad Cafe #144",
+    "lat": 41.3442,
+    "lng": 69.3245
+  },
+  {
+    "id": "p145",
+    "name": "Shaykhantakhur Market #145",
+    "lat": 41.2434,
+    "lng": 69.2793
+  },
+  {
+    "id": "p146",
+    "name": "Yunusabad Market #146",
+    "lat": 41.241,
+    "lng": 69.1007
+  },
+  {
+    "id": "p147",
+    "name": "Yashnabad Cafe #147",
+    "lat": 41.2606,
+    "lng": 69.1982
+  },
+  {
+    "id": "p148",
+    "name": "Yakkasaray Market #148",
+    "lat": 41.2184,
+    "lng": 69.1133
+  },
+  {
+    "id": "p149",
+    "name": "Bektemir Cafe #149",
+    "lat": 41.3492,
+    "lng": 69.307
+  },
+  {
+    "id": "p150",
+    "name": "Uchtepa Clinic #150",
+    "lat": 41.2499,
+    "lng": 69.1487
+  },
+  {
+    "id": "p151",
+    "name": "Sergeli Warehouse #151",
+    "lat": 41.2903,
+    "lng": 69.2736
+  },
+  {
+    "id": "p152",
+    "name": "Sergeli Pharmacy #152",
+    "lat": 41.2501,
+    "lng": 69.1339
+  },
+  {
+    "id": "p153",
+    "name": "Chilanzar Clinic #153",
+    "lat": 41.2041,
+    "lng": 69.3206
+  },
+  {
+    "id": "p154",
+    "name": "Yunusabad Market #154",
+    "lat": 41.3973,
+    "lng": 69.1388
+  },
+  {
+    "id": "p155",
+    "name": "Uchtepa School #155",
+    "lat": 41.2348,
+    "lng": 69.2357
+  },
+  {
+    "id": "p156",
+    "name": "Mirzo Ulugbek Pharmacy #156",
+    "lat": 41.206,
+    "lng": 69.11
+  },
+  {
+    "id": "p157",
+    "name": "Shaykhantakhur Warehouse #157",
+    "lat": 41.3061,
+    "lng": 69.1493
+  },
+  {
+    "id": "p158",
+    "name": "Uchtepa Cafe #158",
+    "lat": 41.292,
+    "lng": 69.1961
+  },
+  {
+    "id": "p159",
+    "name": "Yunusabad Warehouse #159",
+    "lat": 41.3489,
+    "lng": 69.1683
+  },
+  {
+    "id": "p160",
+    "name": "Sergeli Cafe #160",
+    "lat": 41.3346,
+    "lng": 69.2361
+  },
+  {
+    "id": "p161",
+    "name": "Yashnabad Office #161",
+    "lat": 41.3775,
+    "lng": 69.3857
+  },
+  {
+    "id": "p162",
+    "name": "Yakkasaray Office #162",
+    "lat": 41.3957,
+    "lng": 69.2157
+  },
+  {
+    "id": "p163",
+    "name": "Uchtepa Pharmacy #163",
+    "lat": 41.3785,
+    "lng": 69.1569
+  },
+  {
+    "id": "p164",
+    "name": "Yakkasaray Market #164",
+    "lat": 41.3764,
+    "lng": 69.1336
+  },
+  {
+    "id": "p165",
+    "name": "Mirabad Cafe #165",
+    "lat": 41.2558,
+    "lng": 69.1035
+  },
+  {
+    "id": "p166",
+    "name": "Mirabad Shop #166",
+    "lat": 41.3858,
+    "lng": 69.1828
+  },
+  {
+    "id": "p167",
+    "name": "Yakkasaray Clinic #167",
+    "lat": 41.3522,
+    "lng": 69.1622
+  },
+  {
+    "id": "p168",
+    "name": "Mirabad Shop #168",
+    "lat": 41.3688,
+    "lng": 69.1737
+  },
+  {
+    "id": "p169",
+    "name": "Uchtepa Clinic #169",
+    "lat": 41.3356,
+    "lng": 69.3691
+  },
+  {
+    "id": "p170",
+    "name": "Bektemir Clinic #170",
+    "lat": 41.2111,
+    "lng": 69.2064
+  },
+  {
+    "id": "p171",
+    "name": "Uchtepa Warehouse #171",
+    "lat": 41.2817,
+    "lng": 69.3163
+  },
+  {
+    "id": "p172",
+    "name": "Yunusabad Cafe #172",
+    "lat": 41.2439,
+    "lng": 69.1484
+  },
+  {
+    "id": "p173",
+    "name": "Olmazor Clinic #173",
+    "lat": 41.3696,
+    "lng": 69.2267
+  },
+  {
+    "id": "p174",
+    "name": "Sergeli Cafe #174",
+    "lat": 41.2123,
+    "lng": 69.3646
+  },
+  {
+    "id": "p175",
+    "name": "Bektemir School #175",
+    "lat": 41.2446,
+    "lng": 69.396
+  },
+  {
+    "id": "p176",
+    "name": "Uchtepa Warehouse #176",
+    "lat": 41.2994,
+    "lng": 69.1693
+  },
+  {
+    "id": "p177",
+    "name": "Yakkasaray Market #177",
+    "lat": 41.3372,
+    "lng": 69.2018
+  },
+  {
+    "id": "p178",
+    "name": "Uchtepa School #178",
+    "lat": 41.3094,
+    "lng": 69.312
+  },
+  {
+    "id": "p179",
+    "name": "Yunusabad Cafe #179",
+    "lat": 41.3592,
+    "lng": 69.2137
+  },
+  {
+    "id": "p180",
+    "name": "Yakkasaray Pharmacy #180",
+    "lat": 41.3115,
+    "lng": 69.2442
+  },
+  {
+    "id": "p181",
+    "name": "Mirabad Pharmacy #181",
+    "lat": 41.3787,
+    "lng": 69.1221
+  },
+  {
+    "id": "p182",
+    "name": "Uchtepa Cafe #182",
+    "lat": 41.3427,
+    "lng": 69.143
+  },
+  {
+    "id": "p183",
+    "name": "Yashnabad Warehouse #183",
+    "lat": 41.2161,
+    "lng": 69.3517
+  },
+  {
+    "id": "p184",
+    "name": "Olmazor Office #184",
+    "lat": 41.3435,
+    "lng": 69.2069
+  },
+  {
+    "id": "p185",
+    "name": "Mirzo Ulugbek Cafe #185",
+    "lat": 41.3364,
+    "lng": 69.2927
+  },
+  {
+    "id": "p186",
+    "name": "Mirzo Ulugbek Warehouse #186",
+    "lat": 41.2148,
+    "lng": 69.17
+  },
+  {
+    "id": "p187",
+    "name": "Chilanzar Warehouse #187",
+    "lat": 41.3,
+    "lng": 69.2811
+  },
+  {
+    "id": "p188",
+    "name": "Mirabad Pharmacy #188",
+    "lat": 41.2436,
+    "lng": 69.3141
+  },
+  {
+    "id": "p189",
+    "name": "Olmazor Cafe #189",
+    "lat": 41.376,
+    "lng": 69.2204
+  },
+  {
+    "id": "p190",
+    "name": "Yakkasaray Warehouse #190",
+    "lat": 41.2358,
+    "lng": 69.3649
+  },
+  {
+    "id": "p191",
+    "name": "Shaykhantakhur Cafe #191",
+    "lat": 41.2572,
+    "lng": 69.1909
+  },
+  {
+    "id": "p192",
+    "name": "Mirzo Ulugbek Shop #192",
+    "lat": 41.359,
+    "lng": 69.1488
+  },
+  {
+    "id": "p193",
+    "name": "Bektemir Office #193",
+    "lat": 41.3497,
+    "lng": 69.1923
+  },
+  {
+    "id": "p194",
+    "name": "Bektemir Market #194",
+    "lat": 41.2945,
+    "lng": 69.2692
+  },
+  {
+    "id": "p195",
+    "name": "Yunusabad Cafe #195",
+    "lat": 41.2054,
+    "lng": 69.3744
+  },
+  {
+    "id": "p196",
+    "name": "Olmazor Market #196",
+    "lat": 41.3753,
+    "lng": 69.3455
+  },
+  {
+    "id": "p197",
+    "name": "Bektemir Clinic #197",
+    "lat": 41.3044,
+    "lng": 69.2268
+  },
+  {
+    "id": "p198",
+    "name": "Yakkasaray School #198",
+    "lat": 41.2614,
+    "lng": 69.248
+  },
+  {
+    "id": "p199",
+    "name": "Shaykhantakhur School #199",
+    "lat": 41.2329,
+    "lng": 69.3496
+  },
+  {
+    "id": "p200",
+    "name": "Shaykhantakhur Market #200",
+    "lat": 41.2927,
+    "lng": 69.1647
+  },
+  {
+    "id": "p201",
+    "name": "Mirzo Ulugbek Warehouse #201",
+    "lat": 41.2408,
+    "lng": 69.3582
+  },
+  {
+    "id": "p202",
+    "name": "Yunusabad Office #202",
+    "lat": 41.2719,
+    "lng": 69.3779
+  },
+  {
+    "id": "p203",
+    "name": "Yakkasaray Office #203",
+    "lat": 41.3925,
+    "lng": 69.2907
+  },
+  {
+    "id": "p204",
+    "name": "Olmazor Warehouse #204",
+    "lat": 41.227,
+    "lng": 69.2695
+  },
+  {
+    "id": "p205",
+    "name": "Mirzo Ulugbek Pharmacy #205",
+    "lat": 41.3383,
+    "lng": 69.1429
+  },
+  {
+    "id": "p206",
+    "name": "Yashnabad Pharmacy #206",
+    "lat": 41.34,
+    "lng": 69.2493
+  },
+  {
+    "id": "p207",
+    "name": "Yashnabad Pharmacy #207",
+    "lat": 41.2157,
+    "lng": 69.2643
+  },
+  {
+    "id": "p208",
+    "name": "Uchtepa Pharmacy #208",
+    "lat": 41.3864,
+    "lng": 69.1556
+  },
+  {
+    "id": "p209",
+    "name": "Uchtepa Pharmacy #209",
+    "lat": 41.3292,
+    "lng": 69.113
+  },
+  {
+    "id": "p210",
+    "name": "Chilanzar Market #210",
+    "lat": 41.3596,
+    "lng": 69.1211
+  },
+  {
+    "id": "p211",
+    "name": "Mirabad School #211",
+    "lat": 41.2804,
+    "lng": 69.3191
+  },
+  {
+    "id": "p212",
+    "name": "Mirabad Office #212",
+    "lat": 41.2536,
+    "lng": 69.2678
+  },
+  {
+    "id": "p213",
+    "name": "Yunusabad School #213",
+    "lat": 41.3774,
+    "lng": 69.359
+  },
+  {
+    "id": "p214",
+    "name": "Chilanzar Warehouse #214",
+    "lat": 41.3022,
+    "lng": 69.2149
+  },
+  {
+    "id": "p215",
+    "name": "Mirabad Shop #215",
+    "lat": 41.3794,
+    "lng": 69.3067
+  },
+  {
+    "id": "p216",
+    "name": "Uchtepa School #216",
+    "lat": 41.325,
+    "lng": 69.1102
+  },
+  {
+    "id": "p217",
+    "name": "Yunusabad Warehouse #217",
+    "lat": 41.2213,
+    "lng": 69.3162
+  },
+  {
+    "id": "p218",
+    "name": "Yakkasaray Pharmacy #218",
+    "lat": 41.2017,
+    "lng": 69.3835
+  },
+  {
+    "id": "p219",
+    "name": "Sergeli Clinic #219",
+    "lat": 41.2187,
+    "lng": 69.2065
+  },
+  {
+    "id": "p220",
+    "name": "Olmazor Cafe #220",
+    "lat": 41.2344,
+    "lng": 69.1198
+  },
+  {
+    "id": "p221",
+    "name": "Chilanzar School #221",
+    "lat": 41.3924,
+    "lng": 69.37
+  },
+  {
+    "id": "p222",
+    "name": "Yunusabad School #222",
+    "lat": 41.327,
+    "lng": 69.2149
+  },
+  {
+    "id": "p223",
+    "name": "Mirzo Ulugbek Pharmacy #223",
+    "lat": 41.2677,
+    "lng": 69.3912
+  },
+  {
+    "id": "p224",
+    "name": "Chilanzar Pharmacy #224",
+    "lat": 41.3813,
+    "lng": 69.3883
+  },
+  {
+    "id": "p225",
+    "name": "Uchtepa Market #225",
+    "lat": 41.3357,
+    "lng": 69.2978
+  },
+  {
+    "id": "p226",
+    "name": "Yunusabad Market #226",
+    "lat": 41.2861,
+    "lng": 69.1394
+  },
+  {
+    "id": "p227",
+    "name": "Sergeli Shop #227",
+    "lat": 41.2615,
+    "lng": 69.3442
+  },
+  {
+    "id": "p228",
+    "name": "Uchtepa Cafe #228",
+    "lat": 41.3531,
+    "lng": 69.1684
+  },
+  {
+    "id": "p229",
+    "name": "Shaykhantakhur Shop #229",
+    "lat": 41.3215,
+    "lng": 69.2074
+  },
+  {
+    "id": "p230",
+    "name": "Sergeli School #230",
+    "lat": 41.2912,
+    "lng": 69.3707
+  },
+  {
+    "id": "p231",
+    "name": "Mirzo Ulugbek Pharmacy #231",
+    "lat": 41.2759,
+    "lng": 69.1158
+  },
+  {
+    "id": "p232",
+    "name": "Mirzo Ulugbek Office #232",
+    "lat": 41.2649,
+    "lng": 69.11
+  },
+  {
+    "id": "p233",
+    "name": "Yakkasaray Shop #233",
+    "lat": 41.3527,
+    "lng": 69.2506
+  },
+  {
+    "id": "p234",
+    "name": "Yakkasaray Clinic #234",
+    "lat": 41.3162,
+    "lng": 69.148
+  },
+  {
+    "id": "p235",
+    "name": "Sergeli Clinic #235",
+    "lat": 41.3537,
+    "lng": 69.2209
+  },
+  {
+    "id": "p236",
+    "name": "Bektemir Cafe #236",
+    "lat": 41.379,
+    "lng": 69.2214
+  },
+  {
+    "id": "p237",
+    "name": "Bektemir Clinic #237",
+    "lat": 41.2452,
+    "lng": 69.1021
+  },
+  {
+    "id": "p238",
+    "name": "Shaykhantakhur School #238",
+    "lat": 41.2166,
+    "lng": 69.3859
+  },
+  {
+    "id": "p239",
+    "name": "Yashnabad Market #239",
+    "lat": 41.3974,
+    "lng": 69.2956
+  },
+  {
+    "id": "p240",
+    "name": "Uchtepa School #240",
+    "lat": 41.3462,
+    "lng": 69.2832
+  },
+  {
+    "id": "p241",
+    "name": "Yashnabad Clinic #241",
+    "lat": 41.3278,
+    "lng": 69.1466
+  },
+  {
+    "id": "p242",
+    "name": "Chilanzar Shop #242",
+    "lat": 41.361,
+    "lng": 69.2223
+  },
+  {
+    "id": "p243",
+    "name": "Olmazor Pharmacy #243",
+    "lat": 41.2888,
+    "lng": 69.1685
+  },
+  {
+    "id": "p244",
+    "name": "Bektemir Shop #244",
+    "lat": 41.3112,
+    "lng": 69.1918
+  },
+  {
+    "id": "p245",
+    "name": "Chilanzar Office #245",
+    "lat": 41.278,
+    "lng": 69.1671
+  },
+  {
+    "id": "p246",
+    "name": "Yakkasaray Clinic #246",
+    "lat": 41.386,
+    "lng": 69.3661
+  },
+  {
+    "id": "p247",
+    "name": "Yashnabad Market #247",
+    "lat": 41.3814,
+    "lng": 69.3515
+  },
+  {
+    "id": "p248",
+    "name": "Olmazor Shop #248",
+    "lat": 41.354,
+    "lng": 69.1601
+  },
+  {
+    "id": "p249",
+    "name": "Mirabad Shop #249",
+    "lat": 41.201,
+    "lng": 69.1375
+  },
+  {
+    "id": "p250",
+    "name": "Chilanzar Cafe #250",
+    "lat": 41.3965,
+    "lng": 69.3622
+  },
+  {
+    "id": "p251",
+    "name": "Mirzo Ulugbek Pharmacy #251",
+    "lat": 41.2232,
+    "lng": 69.3798
+  },
+  {
+    "id": "p252",
+    "name": "Yakkasaray Warehouse #252",
+    "lat": 41.3387,
+    "lng": 69.1443
+  },
+  {
+    "id": "p253",
+    "name": "Mirzo Ulugbek School #253",
+    "lat": 41.3914,
+    "lng": 69.2322
+  },
+  {
+    "id": "p254",
+    "name": "Sergeli Warehouse #254",
+    "lat": 41.2351,
+    "lng": 69.3422
+  },
+  {
+    "id": "p255",
+    "name": "Sergeli Pharmacy #255",
+    "lat": 41.2538,
+    "lng": 69.1995
+  },
+  {
+    "id": "p256",
+    "name": "Yakkasaray Office #256",
+    "lat": 41.2056,
+    "lng": 69.3026
+  },
+  {
+    "id": "p257",
+    "name": "Uchtepa Warehouse #257",
+    "lat": 41.2461,
+    "lng": 69.2908
+  },
+  {
+    "id": "p258",
+    "name": "Yunusabad Shop #258",
+    "lat": 41.2737,
+    "lng": 69.2947
+  },
+  {
+    "id": "p259",
+    "name": "Bektemir Shop #259",
+    "lat": 41.325,
+    "lng": 69.1645
+  },
+  {
+    "id": "p260",
+    "name": "Olmazor School #260",
+    "lat": 41.2124,
+    "lng": 69.2548
+  },
+  {
+    "id": "p261",
+    "name": "Olmazor Shop #261",
+    "lat": 41.2604,
+    "lng": 69.1416
+  },
+  {
+    "id": "p262",
+    "name": "Mirzo Ulugbek Shop #262",
+    "lat": 41.3678,
+    "lng": 69.2951
+  },
+  {
+    "id": "p263",
+    "name": "Yunusabad School #263",
+    "lat": 41.2753,
+    "lng": 69.3213
+  },
+  {
+    "id": "p264",
+    "name": "Mirabad Clinic #264",
+    "lat": 41.2004,
+    "lng": 69.3424
+  },
+  {
+    "id": "p265",
+    "name": "Mirabad Pharmacy #265",
+    "lat": 41.3634,
+    "lng": 69.1243
+  },
+  {
+    "id": "p266",
+    "name": "Mirzo Ulugbek Office #266",
+    "lat": 41.219,
+    "lng": 69.1505
+  },
+  {
+    "id": "p267",
+    "name": "Yunusabad Warehouse #267",
+    "lat": 41.2289,
+    "lng": 69.2743
+  },
+  {
+    "id": "p268",
+    "name": "Mirzo Ulugbek Cafe #268",
+    "lat": 41.2446,
+    "lng": 69.1353
+  },
+  {
+    "id": "p269",
+    "name": "Olmazor Clinic #269",
+    "lat": 41.2525,
+    "lng": 69.2735
+  },
+  {
+    "id": "p270",
+    "name": "Shaykhantakhur Clinic #270",
+    "lat": 41.3091,
+    "lng": 69.3708
+  },
+  {
+    "id": "p271",
+    "name": "Mirabad Office #271",
+    "lat": 41.2278,
+    "lng": 69.3447
+  },
+  {
+    "id": "p272",
+    "name": "Mirabad Warehouse #272",
+    "lat": 41.2031,
+    "lng": 69.3172
+  },
+  {
+    "id": "p273",
+    "name": "Bektemir Shop #273",
+    "lat": 41.2846,
+    "lng": 69.3004
+  },
+  {
+    "id": "p274",
+    "name": "Olmazor School #274",
+    "lat": 41.288,
+    "lng": 69.2666
+  },
+  {
+    "id": "p275",
+    "name": "Uchtepa Office #275",
+    "lat": 41.3385,
+    "lng": 69.2013
+  },
+  {
+    "id": "p276",
+    "name": "Uchtepa Warehouse #276",
+    "lat": 41.2542,
+    "lng": 69.1333
+  },
+  {
+    "id": "p277",
+    "name": "Chilanzar Pharmacy #277",
+    "lat": 41.2513,
+    "lng": 69.2855
+  },
+  {
+    "id": "p278",
+    "name": "Uchtepa Office #278",
+    "lat": 41.3405,
+    "lng": 69.2699
+  },
+  {
+    "id": "p279",
+    "name": "Shaykhantakhur Pharmacy #279",
+    "lat": 41.2797,
+    "lng": 69.3977
+  },
+  {
+    "id": "p280",
+    "name": "Bektemir Clinic #280",
+    "lat": 41.339,
+    "lng": 69.1741
+  },
+  {
+    "id": "p281",
+    "name": "Shaykhantakhur Office #281",
+    "lat": 41.2683,
+    "lng": 69.2997
+  },
+  {
+    "id": "p282",
+    "name": "Bektemir Office #282",
+    "lat": 41.2243,
+    "lng": 69.2737
+  },
+  {
+    "id": "p283",
+    "name": "Mirzo Ulugbek Warehouse #283",
+    "lat": 41.2682,
+    "lng": 69.3837
+  },
+  {
+    "id": "p284",
+    "name": "Shaykhantakhur School #284",
+    "lat": 41.2759,
+    "lng": 69.3981
+  },
+  {
+    "id": "p285",
+    "name": "Shaykhantakhur Cafe #285",
+    "lat": 41.3942,
+    "lng": 69.1141
+  },
+  {
+    "id": "p286",
+    "name": "Chilanzar Pharmacy #286",
+    "lat": 41.3177,
+    "lng": 69.2303
+  },
+  {
+    "id": "p287",
+    "name": "Uchtepa Warehouse #287",
+    "lat": 41.3184,
+    "lng": 69.1626
+  },
+  {
+    "id": "p288",
+    "name": "Yakkasaray Cafe #288",
+    "lat": 41.2769,
+    "lng": 69.1292
+  },
+  {
+    "id": "p289",
+    "name": "Uchtepa Market #289",
+    "lat": 41.2849,
+    "lng": 69.3101
+  },
+  {
+    "id": "p290",
+    "name": "Yakkasaray Clinic #290",
+    "lat": 41.2723,
+    "lng": 69.1049
+  },
+  {
+    "id": "p291",
+    "name": "Yashnabad School #291",
+    "lat": 41.3242,
+    "lng": 69.2918
+  },
+  {
+    "id": "p292",
+    "name": "Olmazor School #292",
+    "lat": 41.3206,
+    "lng": 69.1302
+  },
+  {
+    "id": "p293",
+    "name": "Yakkasaray School #293",
+    "lat": 41.3488,
+    "lng": 69.3196
+  },
+  {
+    "id": "p294",
+    "name": "Yashnabad Market #294",
+    "lat": 41.3874,
+    "lng": 69.2313
+  },
+  {
+    "id": "p295",
+    "name": "Mirzo Ulugbek Shop #295",
+    "lat": 41.3123,
+    "lng": 69.1532
+  },
+  {
+    "id": "p296",
+    "name": "Yunusabad Market #296",
+    "lat": 41.3672,
+    "lng": 69.1675
+  },
+  {
+    "id": "p297",
+    "name": "Yakkasaray Clinic #297",
+    "lat": 41.3609,
+    "lng": 69.2057
+  },
+  {
+    "id": "p298",
+    "name": "Yakkasaray Office #298",
+    "lat": 41.2903,
+    "lng": 69.1939
+  },
+  {
+    "id": "p299",
+    "name": "Mirzo Ulugbek Shop #299",
+    "lat": 41.2556,
+    "lng": 69.2327
+  },
+  {
+    "id": "p300",
+    "name": "Yunusabad Warehouse #300",
+    "lat": 41.2009,
+    "lng": 69.2828
+  },
+  {
+    "id": "p301",
+    "name": "Yunusabad Shop #301",
+    "lat": 41.3262,
+    "lng": 69.1215
+  },
+  {
+    "id": "p302",
+    "name": "Olmazor Shop #302",
+    "lat": 41.2663,
+    "lng": 69.2957
+  },
+  {
+    "id": "p303",
+    "name": "Uchtepa Warehouse #303",
+    "lat": 41.2888,
+    "lng": 69.1984
+  },
+  {
+    "id": "p304",
+    "name": "Uchtepa Shop #304",
+    "lat": 41.2058,
+    "lng": 69.3322
+  },
+  {
+    "id": "p305",
+    "name": "Mirabad School #305",
+    "lat": 41.377,
+    "lng": 69.2871
+  },
+  {
+    "id": "p306",
+    "name": "Mirzo Ulugbek Office #306",
+    "lat": 41.2721,
+    "lng": 69.3049
+  },
+  {
+    "id": "p307",
+    "name": "Uchtepa Shop #307",
+    "lat": 41.2078,
+    "lng": 69.1063
+  },
+  {
+    "id": "p308",
+    "name": "Uchtepa Office #308",
+    "lat": 41.3682,
+    "lng": 69.2482
+  },
+  {
+    "id": "p309",
+    "name": "Yashnabad Cafe #309",
+    "lat": 41.3821,
+    "lng": 69.2749
+  },
+  {
+    "id": "p310",
+    "name": "Yakkasaray Pharmacy #310",
+    "lat": 41.3673,
+    "lng": 69.1523
+  },
+  {
+    "id": "p311",
+    "name": "Bektemir School #311",
+    "lat": 41.2069,
+    "lng": 69.2565
+  },
+  {
+    "id": "p312",
+    "name": "Chilanzar Cafe #312",
+    "lat": 41.2291,
+    "lng": 69.313
+  },
+  {
+    "id": "p313",
+    "name": "Sergeli Warehouse #313",
+    "lat": 41.2372,
+    "lng": 69.1651
+  },
+  {
+    "id": "p314",
+    "name": "Yakkasaray School #314",
+    "lat": 41.2034,
+    "lng": 69.368
+  },
+  {
+    "id": "p315",
+    "name": "Chilanzar School #315",
+    "lat": 41.2866,
+    "lng": 69.2228
+  },
+  {
+    "id": "p316",
+    "name": "Shaykhantakhur Market #316",
+    "lat": 41.2796,
+    "lng": 69.3362
+  },
+  {
+    "id": "p317",
+    "name": "Shaykhantakhur Market #317",
+    "lat": 41.3303,
+    "lng": 69.1523
+  },
+  {
+    "id": "p318",
+    "name": "Mirzo Ulugbek Clinic #318",
+    "lat": 41.3363,
+    "lng": 69.1623
+  },
+  {
+    "id": "p319",
+    "name": "Chilanzar Warehouse #319",
+    "lat": 41.2513,
+    "lng": 69.3473
+  },
+  {
+    "id": "p320",
+    "name": "Chilanzar Clinic #320",
+    "lat": 41.2506,
+    "lng": 69.2077
+  },
+  {
+    "id": "p321",
+    "name": "Sergeli Pharmacy #321",
+    "lat": 41.378,
+    "lng": 69.3237
+  },
+  {
+    "id": "p322",
+    "name": "Yakkasaray Warehouse #322",
+    "lat": 41.2408,
+    "lng": 69.3138
+  },
+  {
+    "id": "p323",
+    "name": "Yashnabad Clinic #323",
+    "lat": 41.3914,
+    "lng": 69.3918
+  },
+  {
+    "id": "p324",
+    "name": "Sergeli Pharmacy #324",
+    "lat": 41.2841,
+    "lng": 69.1394
+  },
+  {
+    "id": "p325",
+    "name": "Uchtepa Cafe #325",
+    "lat": 41.3916,
+    "lng": 69.2961
+  },
+  {
+    "id": "p326",
+    "name": "Shaykhantakhur Cafe #326",
+    "lat": 41.2069,
+    "lng": 69.2957
+  },
+  {
+    "id": "p327",
+    "name": "Mirabad Market #327",
+    "lat": 41.295,
+    "lng": 69.2229
+  },
+  {
+    "id": "p328",
+    "name": "Yunusabad Office #328",
+    "lat": 41.2309,
+    "lng": 69.1837
+  },
+  {
+    "id": "p329",
+    "name": "Yashnabad Warehouse #329",
+    "lat": 41.2271,
+    "lng": 69.1859
+  },
+  {
+    "id": "p330",
+    "name": "Olmazor Office #330",
+    "lat": 41.2965,
+    "lng": 69.3572
+  },
+  {
+    "id": "p331",
+    "name": "Shaykhantakhur Pharmacy #331",
+    "lat": 41.236,
+    "lng": 69.3683
+  },
+  {
+    "id": "p332",
+    "name": "Yakkasaray Pharmacy #332",
+    "lat": 41.2745,
+    "lng": 69.347
+  },
+  {
+    "id": "p333",
+    "name": "Bektemir Pharmacy #333",
+    "lat": 41.2371,
+    "lng": 69.3132
+  },
+  {
+    "id": "p334",
+    "name": "Chilanzar Clinic #334",
+    "lat": 41.3262,
+    "lng": 69.2068
+  },
+  {
+    "id": "p335",
+    "name": "Sergeli Office #335",
+    "lat": 41.383,
+    "lng": 69.2713
+  },
+  {
+    "id": "p336",
+    "name": "Olmazor Clinic #336",
+    "lat": 41.3062,
+    "lng": 69.3889
+  },
+  {
+    "id": "p337",
+    "name": "Yakkasaray Market #337",
+    "lat": 41.2983,
+    "lng": 69.2869
+  },
+  {
+    "id": "p338",
+    "name": "Bektemir Pharmacy #338",
+    "lat": 41.3747,
+    "lng": 69.1768
+  },
+  {
+    "id": "p339",
+    "name": "Chilanzar Office #339",
+    "lat": 41.3099,
+    "lng": 69.2806
+  },
+  {
+    "id": "p340",
+    "name": "Yunusabad Cafe #340",
+    "lat": 41.3729,
+    "lng": 69.2051
+  },
+  {
+    "id": "p341",
+    "name": "Olmazor Warehouse #341",
+    "lat": 41.231,
+    "lng": 69.3203
+  },
+  {
+    "id": "p342",
+    "name": "Mirabad Clinic #342",
+    "lat": 41.3227,
+    "lng": 69.2479
+  },
+  {
+    "id": "p343",
+    "name": "Uchtepa Warehouse #343",
+    "lat": 41.2969,
+    "lng": 69.1757
+  },
+  {
+    "id": "p344",
+    "name": "Bektemir Pharmacy #344",
+    "lat": 41.2445,
+    "lng": 69.384
+  },
+  {
+    "id": "p345",
+    "name": "Sergeli Pharmacy #345",
+    "lat": 41.3922,
+    "lng": 69.2974
+  },
+  {
+    "id": "p346",
+    "name": "Bektemir Office #346",
+    "lat": 41.3439,
+    "lng": 69.2195
+  },
+  {
+    "id": "p347",
+    "name": "Mirzo Ulugbek Shop #347",
+    "lat": 41.3016,
+    "lng": 69.3621
+  },
+  {
+    "id": "p348",
+    "name": "Sergeli Warehouse #348",
+    "lat": 41.361,
+    "lng": 69.2633
+  },
+  {
+    "id": "p349",
+    "name": "Mirzo Ulugbek Warehouse #349",
+    "lat": 41.3506,
+    "lng": 69.2901
+  },
+  {
+    "id": "p350",
+    "name": "Shaykhantakhur Market #350",
+    "lat": 41.2048,
+    "lng": 69.1455
+  },
+  {
+    "id": "p351",
+    "name": "Shaykhantakhur Clinic #351",
+    "lat": 41.2531,
+    "lng": 69.3616
+  },
+  {
+    "id": "p352",
+    "name": "Yakkasaray Pharmacy #352",
+    "lat": 41.2441,
+    "lng": 69.3964
+  },
+  {
+    "id": "p353",
+    "name": "Chilanzar Market #353",
+    "lat": 41.369,
+    "lng": 69.153
+  },
+  {
+    "id": "p354",
+    "name": "Yashnabad Shop #354",
+    "lat": 41.3746,
+    "lng": 69.3275
+  },
+  {
+    "id": "p355",
+    "name": "Shaykhantakhur Clinic #355",
+    "lat": 41.2599,
+    "lng": 69.234
+  },
+  {
+    "id": "p356",
+    "name": "Mirabad Shop #356",
+    "lat": 41.3341,
+    "lng": 69.3141
+  },
+  {
+    "id": "p357",
+    "name": "Mirzo Ulugbek Market #357",
+    "lat": 41.3062,
+    "lng": 69.2462
+  },
+  {
+    "id": "p358",
+    "name": "Chilanzar Warehouse #358",
+    "lat": 41.3982,
+    "lng": 69.1943
+  },
+  {
+    "id": "p359",
+    "name": "Olmazor Market #359",
+    "lat": 41.3679,
+    "lng": 69.2958
+  },
+  {
+    "id": "p360",
+    "name": "Yunusabad Office #360",
+    "lat": 41.2188,
+    "lng": 69.3716
+  },
+  {
+    "id": "p361",
+    "name": "Mirzo Ulugbek Shop #361",
+    "lat": 41.3246,
+    "lng": 69.1147
+  },
+  {
+    "id": "p362",
+    "name": "Bektemir School #362",
+    "lat": 41.3014,
+    "lng": 69.2295
+  },
+  {
+    "id": "p363",
+    "name": "Yakkasaray Shop #363",
+    "lat": 41.2573,
+    "lng": 69.2982
+  },
+  {
+    "id": "p364",
+    "name": "Yunusabad Office #364",
+    "lat": 41.2341,
+    "lng": 69.1629
+  },
+  {
+    "id": "p365",
+    "name": "Chilanzar Clinic #365",
+    "lat": 41.3789,
+    "lng": 69.3664
+  },
+  {
+    "id": "p366",
+    "name": "Mirabad Clinic #366",
+    "lat": 41.2207,
+    "lng": 69.2903
+  },
+  {
+    "id": "p367",
+    "name": "Bektemir Office #367",
+    "lat": 41.2225,
+    "lng": 69.3344
+  },
+  {
+    "id": "p368",
+    "name": "Sergeli School #368",
+    "lat": 41.3157,
+    "lng": 69.2748
+  },
+  {
+    "id": "p369",
+    "name": "Uchtepa Clinic #369",
+    "lat": 41.2559,
+    "lng": 69.3319
+  },
+  {
+    "id": "p370",
+    "name": "Uchtepa Office #370",
+    "lat": 41.2306,
+    "lng": 69.2251
+  },
+  {
+    "id": "p371",
+    "name": "Yakkasaray Clinic #371",
+    "lat": 41.2287,
+    "lng": 69.1172
+  },
+  {
+    "id": "p372",
+    "name": "Olmazor Warehouse #372",
+    "lat": 41.3362,
+    "lng": 69.3284
+  },
+  {
+    "id": "p373",
+    "name": "Yunusabad Shop #373",
+    "lat": 41.2974,
+    "lng": 69.348
+  },
+  {
+    "id": "p374",
+    "name": "Yunusabad Pharmacy #374",
+    "lat": 41.3878,
+    "lng": 69.2111
+  },
+  {
+    "id": "p375",
+    "name": "Yunusabad Cafe #375",
+    "lat": 41.2667,
+    "lng": 69.1641
+  },
+  {
+    "id": "p376",
+    "name": "Chilanzar Shop #376",
+    "lat": 41.2913,
+    "lng": 69.345
+  },
+  {
+    "id": "p377",
+    "name": "Uchtepa Shop #377",
+    "lat": 41.2992,
+    "lng": 69.323
+  },
+  {
+    "id": "p378",
+    "name": "Shaykhantakhur Office #378",
+    "lat": 41.2097,
+    "lng": 69.2123
+  },
+  {
+    "id": "p379",
+    "name": "Yashnabad School #379",
+    "lat": 41.3379,
+    "lng": 69.1247
+  },
+  {
+    "id": "p380",
+    "name": "Uchtepa Cafe #380",
+    "lat": 41.2043,
+    "lng": 69.2209
+  },
+  {
+    "id": "p381",
+    "name": "Bektemir Warehouse #381",
+    "lat": 41.292,
+    "lng": 69.3466
+  },
+  {
+    "id": "p382",
+    "name": "Yashnabad School #382",
+    "lat": 41.372,
+    "lng": 69.2362
+  },
+  {
+    "id": "p383",
+    "name": "Yashnabad Office #383",
+    "lat": 41.2225,
+    "lng": 69.2209
+  },
+  {
+    "id": "p384",
+    "name": "Uchtepa Market #384",
+    "lat": 41.3699,
+    "lng": 69.2457
+  },
+  {
+    "id": "p385",
+    "name": "Bektemir Warehouse #385",
+    "lat": 41.3156,
+    "lng": 69.1131
+  },
+  {
+    "id": "p386",
+    "name": "Yunusabad Clinic #386",
+    "lat": 41.387,
+    "lng": 69.3348
+  },
+  {
+    "id": "p387",
+    "name": "Mirabad Pharmacy #387",
+    "lat": 41.3965,
+    "lng": 69.2074
+  },
+  {
+    "id": "p388",
+    "name": "Yakkasaray Warehouse #388",
+    "lat": 41.3857,
+    "lng": 69.362
+  },
+  {
+    "id": "p389",
+    "name": "Uchtepa Market #389",
+    "lat": 41.2485,
+    "lng": 69.265
+  },
+  {
+    "id": "p390",
+    "name": "Yunusabad Clinic #390",
+    "lat": 41.2665,
+    "lng": 69.2826
+  },
+  {
+    "id": "p391",
+    "name": "Yashnabad Shop #391",
+    "lat": 41.2142,
+    "lng": 69.2785
+  },
+  {
+    "id": "p392",
+    "name": "Yunusabad Shop #392",
+    "lat": 41.3243,
+    "lng": 69.3773
+  },
+  {
+    "id": "p393",
+    "name": "Yashnabad Cafe #393",
+    "lat": 41.3824,
+    "lng": 69.3493
+  },
+  {
+    "id": "p394",
+    "name": "Uchtepa Cafe #394",
+    "lat": 41.372,
+    "lng": 69.3562
+  },
+  {
+    "id": "p395",
+    "name": "Mirabad Market #395",
+    "lat": 41.2827,
+    "lng": 69.1874
+  },
+  {
+    "id": "p396",
+    "name": "Mirabad Shop #396",
+    "lat": 41.2673,
+    "lng": 69.1637
+  },
+  {
+    "id": "p397",
+    "name": "Shaykhantakhur Market #397",
+    "lat": 41.2614,
+    "lng": 69.2061
+  },
+  {
+    "id": "p398",
+    "name": "Uchtepa Market #398",
+    "lat": 41.2887,
+    "lng": 69.3197
+  },
+  {
+    "id": "p399",
+    "name": "Shaykhantakhur Cafe #399",
+    "lat": 41.2669,
+    "lng": 69.2993
+  },
+  {
+    "id": "p400",
+    "name": "Mirabad Pharmacy #400",
+    "lat": 41.2896,
+    "lng": 69.2547
+  },
+  {
+    "id": "p401",
+    "name": "Yunusabad Cafe #401",
+    "lat": 41.357,
+    "lng": 69.128
+  },
+  {
+    "id": "p402",
+    "name": "Mirzo Ulugbek Office #402",
+    "lat": 41.2219,
+    "lng": 69.1329
+  },
+  {
+    "id": "p403",
+    "name": "Sergeli Market #403",
+    "lat": 41.2889,
+    "lng": 69.2444
+  },
+  {
+    "id": "p404",
+    "name": "Uchtepa Pharmacy #404",
+    "lat": 41.2537,
+    "lng": 69.328
+  },
+  {
+    "id": "p405",
+    "name": "Chilanzar Shop #405",
+    "lat": 41.3402,
+    "lng": 69.3366
+  },
+  {
+    "id": "p406",
+    "name": "Yashnabad Pharmacy #406",
+    "lat": 41.2626,
+    "lng": 69.1235
+  },
+  {
+    "id": "p407",
+    "name": "Bektemir Shop #407",
+    "lat": 41.2352,
+    "lng": 69.2524
+  },
+  {
+    "id": "p408",
+    "name": "Chilanzar Cafe #408",
+    "lat": 41.2267,
+    "lng": 69.1231
+  },
+  {
+    "id": "p409",
+    "name": "Mirabad Pharmacy #409",
+    "lat": 41.2121,
+    "lng": 69.1616
+  },
+  {
+    "id": "p410",
+    "name": "Shaykhantakhur Clinic #410",
+    "lat": 41.3521,
+    "lng": 69.3458
+  },
+  {
+    "id": "p411",
+    "name": "Sergeli School #411",
+    "lat": 41.3026,
+    "lng": 69.3009
+  },
+  {
+    "id": "p412",
+    "name": "Yakkasaray Cafe #412",
+    "lat": 41.2428,
+    "lng": 69.2888
+  },
+  {
+    "id": "p413",
+    "name": "Olmazor Cafe #413",
+    "lat": 41.342,
+    "lng": 69.1395
+  },
+  {
+    "id": "p414",
+    "name": "Sergeli Clinic #414",
+    "lat": 41.257,
+    "lng": 69.3855
+  },
+  {
+    "id": "p415",
+    "name": "Uchtepa Market #415",
+    "lat": 41.3595,
+    "lng": 69.1612
+  },
+  {
+    "id": "p416",
+    "name": "Olmazor Office #416",
+    "lat": 41.2617,
+    "lng": 69.2348
+  },
+  {
+    "id": "p417",
+    "name": "Yakkasaray Pharmacy #417",
+    "lat": 41.2185,
+    "lng": 69.1774
+  },
+  {
+    "id": "p418",
+    "name": "Uchtepa School #418",
+    "lat": 41.2576,
+    "lng": 69.1442
+  },
+  {
+    "id": "p419",
+    "name": "Shaykhantakhur Shop #419",
+    "lat": 41.242,
+    "lng": 69.2615
+  },
+  {
+    "id": "p420",
+    "name": "Yunusabad Office #420",
+    "lat": 41.2575,
+    "lng": 69.3631
+  },
+  {
+    "id": "p421",
+    "name": "Olmazor Pharmacy #421",
+    "lat": 41.2033,
+    "lng": 69.1208
+  },
+  {
+    "id": "p422",
+    "name": "Yashnabad Market #422",
+    "lat": 41.3556,
+    "lng": 69.1573
+  },
+  {
+    "id": "p423",
+    "name": "Mirabad Warehouse #423",
+    "lat": 41.2988,
+    "lng": 69.1161
+  },
+  {
+    "id": "p424",
+    "name": "Chilanzar Clinic #424",
+    "lat": 41.2522,
+    "lng": 69.364
+  },
+  {
+    "id": "p425",
+    "name": "Mirabad Shop #425",
+    "lat": 41.2196,
+    "lng": 69.2494
+  },
+  {
+    "id": "p426",
+    "name": "Shaykhantakhur Market #426",
+    "lat": 41.2174,
+    "lng": 69.329
+  },
+  {
+    "id": "p427",
+    "name": "Uchtepa Clinic #427",
+    "lat": 41.3163,
+    "lng": 69.2254
+  },
+  {
+    "id": "p428",
+    "name": "Yunusabad Warehouse #428",
+    "lat": 41.3737,
+    "lng": 69.1151
+  },
+  {
+    "id": "p429",
+    "name": "Bektemir Cafe #429",
+    "lat": 41.3485,
+    "lng": 69.2535
+  },
+  {
+    "id": "p430",
+    "name": "Yunusabad Pharmacy #430",
+    "lat": 41.2857,
+    "lng": 69.184
+  },
+  {
+    "id": "p431",
+    "name": "Yakkasaray Shop #431",
+    "lat": 41.3903,
+    "lng": 69.1498
+  },
+  {
+    "id": "p432",
+    "name": "Mirzo Ulugbek Cafe #432",
+    "lat": 41.396,
+    "lng": 69.3699
+  },
+  {
+    "id": "p433",
+    "name": "Shaykhantakhur School #433",
+    "lat": 41.3185,
+    "lng": 69.2921
+  },
+  {
+    "id": "p434",
+    "name": "Yunusabad Warehouse #434",
+    "lat": 41.3947,
+    "lng": 69.1892
+  },
+  {
+    "id": "p435",
+    "name": "Yakkasaray Clinic #435",
+    "lat": 41.2922,
+    "lng": 69.1976
+  },
+  {
+    "id": "p436",
+    "name": "Yunusabad Office #436",
+    "lat": 41.3295,
+    "lng": 69.1962
+  },
+  {
+    "id": "p437",
+    "name": "Yashnabad Warehouse #437",
+    "lat": 41.3374,
+    "lng": 69.2277
+  },
+  {
+    "id": "p438",
+    "name": "Mirabad School #438",
+    "lat": 41.3694,
+    "lng": 69.2139
+  },
+  {
+    "id": "p439",
+    "name": "Mirzo Ulugbek Market #439",
+    "lat": 41.24,
+    "lng": 69.2045
+  },
+  {
+    "id": "p440",
+    "name": "Mirzo Ulugbek Warehouse #440",
+    "lat": 41.3239,
+    "lng": 69.1383
+  },
+  {
+    "id": "p441",
+    "name": "Yashnabad Office #441",
+    "lat": 41.2428,
+    "lng": 69.1121
+  },
+  {
+    "id": "p442",
+    "name": "Mirabad Cafe #442",
+    "lat": 41.2628,
+    "lng": 69.1802
+  },
+  {
+    "id": "p443",
+    "name": "Shaykhantakhur Shop #443",
+    "lat": 41.2261,
+    "lng": 69.321
+  },
+  {
+    "id": "p444",
+    "name": "Yashnabad Warehouse #444",
+    "lat": 41.2186,
+    "lng": 69.1785
+  },
+  {
+    "id": "p445",
+    "name": "Bektemir Cafe #445",
+    "lat": 41.3298,
+    "lng": 69.306
+  },
+  {
+    "id": "p446",
+    "name": "Yashnabad Office #446",
+    "lat": 41.2975,
+    "lng": 69.2365
+  },
+  {
+    "id": "p447",
+    "name": "Mirabad School #447",
+    "lat": 41.2975,
+    "lng": 69.2884
+  },
+  {
+    "id": "p448",
+    "name": "Olmazor Market #448",
+    "lat": 41.3034,
+    "lng": 69.3307
+  },
+  {
+    "id": "p449",
+    "name": "Yashnabad School #449",
+    "lat": 41.3861,
+    "lng": 69.3137
+  },
+  {
+    "id": "p450",
+    "name": "Yakkasaray School #450",
+    "lat": 41.269,
+    "lng": 69.1498
+  },
+  {
+    "id": "p451",
+    "name": "Sergeli Shop #451",
+    "lat": 41.2881,
+    "lng": 69.3947
+  },
+  {
+    "id": "p452",
+    "name": "Chilanzar Market #452",
+    "lat": 41.2874,
+    "lng": 69.2805
+  },
+  {
+    "id": "p453",
+    "name": "Yakkasaray Office #453",
+    "lat": 41.3384,
+    "lng": 69.1059
+  },
+  {
+    "id": "p454",
+    "name": "Yakkasaray Market #454",
+    "lat": 41.2324,
+    "lng": 69.3387
+  },
+  {
+    "id": "p455",
+    "name": "Sergeli Cafe #455",
+    "lat": 41.2787,
+    "lng": 69.2134
+  },
+  {
+    "id": "p456",
+    "name": "Chilanzar Warehouse #456",
+    "lat": 41.3282,
+    "lng": 69.2205
+  },
+  {
+    "id": "p457",
+    "name": "Mirzo Ulugbek Clinic #457",
+    "lat": 41.3484,
+    "lng": 69.1691
+  },
+  {
+    "id": "p458",
+    "name": "Chilanzar Warehouse #458",
+    "lat": 41.3734,
+    "lng": 69.1009
+  },
+  {
+    "id": "p459",
+    "name": "Uchtepa Shop #459",
+    "lat": 41.3201,
+    "lng": 69.1624
+  },
+  {
+    "id": "p460",
+    "name": "Uchtepa Warehouse #460",
+    "lat": 41.3006,
+    "lng": 69.3934
+  },
+  {
+    "id": "p461",
+    "name": "Mirzo Ulugbek Market #461",
+    "lat": 41.3978,
+    "lng": 69.1511
+  },
+  {
+    "id": "p462",
+    "name": "Mirabad Office #462",
+    "lat": 41.3429,
+    "lng": 69.19
+  },
+  {
+    "id": "p463",
+    "name": "Bektemir Warehouse #463",
+    "lat": 41.2675,
+    "lng": 69.2984
+  },
+  {
+    "id": "p464",
+    "name": "Bektemir Office #464",
+    "lat": 41.2501,
+    "lng": 69.1457
+  },
+  {
+    "id": "p465",
+    "name": "Shaykhantakhur School #465",
+    "lat": 41.31,
+    "lng": 69.2849
+  },
+  {
+    "id": "p466",
+    "name": "Uchtepa Clinic #466",
+    "lat": 41.3538,
+    "lng": 69.117
+  },
+  {
+    "id": "p467",
+    "name": "Olmazor Market #467",
+    "lat": 41.3739,
+    "lng": 69.1572
+  },
+  {
+    "id": "p468",
+    "name": "Mirabad School #468",
+    "lat": 41.2769,
+    "lng": 69.1878
+  },
+  {
+    "id": "p469",
+    "name": "Chilanzar School #469",
+    "lat": 41.3611,
+    "lng": 69.1992
+  },
+  {
+    "id": "p470",
+    "name": "Shaykhantakhur Cafe #470",
+    "lat": 41.2643,
+    "lng": 69.1149
+  },
+  {
+    "id": "p471",
+    "name": "Yashnabad Cafe #471",
+    "lat": 41.3043,
+    "lng": 69.3247
+  },
+  {
+    "id": "p472",
+    "name": "Sergeli Warehouse #472",
+    "lat": 41.2648,
+    "lng": 69.2915
+  },
+  {
+    "id": "p473",
+    "name": "Yashnabad Cafe #473",
+    "lat": 41.3607,
+    "lng": 69.3236
+  },
+  {
+    "id": "p474",
+    "name": "Yakkasaray Clinic #474",
+    "lat": 41.3134,
+    "lng": 69.3965
+  },
+  {
+    "id": "p475",
+    "name": "Yunusabad Cafe #475",
+    "lat": 41.3529,
+    "lng": 69.2694
+  },
+  {
+    "id": "p476",
+    "name": "Sergeli Shop #476",
+    "lat": 41.3871,
+    "lng": 69.2586
+  },
+  {
+    "id": "p477",
+    "name": "Olmazor Clinic #477",
+    "lat": 41.2443,
+    "lng": 69.1813
+  },
+  {
+    "id": "p478",
+    "name": "Sergeli Pharmacy #478",
+    "lat": 41.3561,
+    "lng": 69.1556
+  },
+  {
+    "id": "p479",
+    "name": "Yunusabad Market #479",
+    "lat": 41.294,
+    "lng": 69.3051
+  },
+  {
+    "id": "p480",
+    "name": "Uchtepa Cafe #480",
+    "lat": 41.2038,
+    "lng": 69.2871
+  },
+  {
+    "id": "p481",
+    "name": "Uchtepa Market #481",
+    "lat": 41.3559,
+    "lng": 69.1417
+  },
+  {
+    "id": "p482",
+    "name": "Mirabad Pharmacy #482",
+    "lat": 41.2044,
+    "lng": 69.2847
+  },
+  {
+    "id": "p483",
+    "name": "Chilanzar Shop #483",
+    "lat": 41.3841,
+    "lng": 69.157
+  },
+  {
+    "id": "p484",
+    "name": "Yunusabad Clinic #484",
+    "lat": 41.3383,
+    "lng": 69.1818
+  },
+  {
+    "id": "p485",
+    "name": "Yunusabad School #485",
+    "lat": 41.2832,
+    "lng": 69.3051
+  },
+  {
+    "id": "p486",
+    "name": "Mirabad School #486",
+    "lat": 41.2316,
+    "lng": 69.2761
+  },
+  {
+    "id": "p487",
+    "name": "Sergeli School #487",
+    "lat": 41.3404,
+    "lng": 69.1648
+  },
+  {
+    "id": "p488",
+    "name": "Yunusabad Cafe #488",
+    "lat": 41.2327,
+    "lng": 69.181
+  },
+  {
+    "id": "p489",
+    "name": "Mirabad School #489",
+    "lat": 41.3945,
+    "lng": 69.1409
+  },
+  {
+    "id": "p490",
+    "name": "Chilanzar Clinic #490",
+    "lat": 41.3671,
+    "lng": 69.2168
+  },
+  {
+    "id": "p491",
+    "name": "Yunusabad Pharmacy #491",
+    "lat": 41.3728,
+    "lng": 69.2174
+  },
+  {
+    "id": "p492",
+    "name": "Olmazor Office #492",
+    "lat": 41.2098,
+    "lng": 69.1559
+  },
+  {
+    "id": "p493",
+    "name": "Yakkasaray Cafe #493",
+    "lat": 41.3522,
+    "lng": 69.2829
+  },
+  {
+    "id": "p494",
+    "name": "Mirabad Market #494",
+    "lat": 41.2769,
+    "lng": 69.207
+  },
+  {
+    "id": "p495",
+    "name": "Yakkasaray Warehouse #495",
+    "lat": 41.2374,
+    "lng": 69.1393
+  },
+  {
+    "id": "p496",
+    "name": "Uchtepa Shop #496",
+    "lat": 41.2831,
+    "lng": 69.2785
+  },
+  {
+    "id": "p497",
+    "name": "Shaykhantakhur Cafe #497",
+    "lat": 41.3751,
+    "lng": 69.158
+  },
+  {
+    "id": "p498",
+    "name": "Mirzo Ulugbek Market #498",
+    "lat": 41.2266,
+    "lng": 69.1314
+  },
+  {
+    "id": "p499",
+    "name": "Yashnabad School #499",
+    "lat": 41.3403,
+    "lng": 69.2815
+  },
+  {
+    "id": "p500",
+    "name": "Mirzo Ulugbek Office #500",
+    "lat": 41.3566,
+    "lng": 69.2742
+  },
+  {
+    "id": "p501",
+    "name": "Mirzo Ulugbek Cafe #501",
+    "lat": 41.335,
+    "lng": 69.2039
+  },
+  {
+    "id": "p502",
+    "name": "Yunusabad Warehouse #502",
+    "lat": 41.2745,
+    "lng": 69.3812
+  },
+  {
+    "id": "p503",
+    "name": "Mirabad Shop #503",
+    "lat": 41.2691,
+    "lng": 69.2731
+  },
+  {
+    "id": "p504",
+    "name": "Yunusabad Pharmacy #504",
+    "lat": 41.2553,
+    "lng": 69.2864
+  },
+  {
+    "id": "p505",
+    "name": "Shaykhantakhur Pharmacy #505",
+    "lat": 41.2814,
+    "lng": 69.1963
+  },
+  {
+    "id": "p506",
+    "name": "Yashnabad Shop #506",
+    "lat": 41.3439,
+    "lng": 69.3173
+  },
+  {
+    "id": "p507",
+    "name": "Mirzo Ulugbek Cafe #507",
+    "lat": 41.2524,
+    "lng": 69.1492
+  },
+  {
+    "id": "p508",
+    "name": "Olmazor Shop #508",
+    "lat": 41.2888,
+    "lng": 69.2316
+  },
+  {
+    "id": "p509",
+    "name": "Bektemir Cafe #509",
+    "lat": 41.2195,
+    "lng": 69.3653
+  },
+  {
+    "id": "p510",
+    "name": "Yakkasaray School #510",
+    "lat": 41.2671,
+    "lng": 69.216
+  },
+  {
+    "id": "p511",
+    "name": "Shaykhantakhur School #511",
+    "lat": 41.3692,
+    "lng": 69.2767
+  },
+  {
+    "id": "p512",
+    "name": "Yunusabad Office #512",
+    "lat": 41.3678,
+    "lng": 69.3116
+  },
+  {
+    "id": "p513",
+    "name": "Bektemir Shop #513",
+    "lat": 41.3356,
+    "lng": 69.1123
+  },
+  {
+    "id": "p514",
+    "name": "Yakkasaray Market #514",
+    "lat": 41.3396,
+    "lng": 69.3616
+  },
+  {
+    "id": "p515",
+    "name": "Sergeli Shop #515",
+    "lat": 41.2145,
+    "lng": 69.396
+  },
+  {
+    "id": "p516",
+    "name": "Shaykhantakhur Shop #516",
+    "lat": 41.305,
+    "lng": 69.1181
+  }
 ]

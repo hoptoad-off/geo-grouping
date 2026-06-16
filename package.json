@@ -4,8 +4,8 @@
   "description": "Cluster geolocation points into groups of 3 and classify by distance tier",
   "type": "module",
   "scripts": {
-    "start": "npx tsx src/index.ts",
-    "viz": "npx tsx src/serve.ts",
+    "start": "tsx src/index.ts",
+    "viz": "tsx src/serve.ts",
     "build": "tsc"
   },
   "devDependencies": {
