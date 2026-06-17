@@ -72,6 +72,17 @@ export interface UserProfile {
   phone: string;
 }
 
+/** A free-text support request captured from a user, shown on the live map. */
+export interface SupportTicket {
+  id: string;            // 'ticket_001'
+  telegramUserId: number;
+  displayName: string;
+  phone: string;         // from profile, '' if unknown
+  language: Language;
+  text: string;
+  createdAt: string;     // ISO timestamp
+}
+
 /** Full persisted bot state. */
 export interface BotState {
   seq: number; // monotonic counter for id generation
@@ -79,4 +90,5 @@ export interface BotState {
   groups: Group[];
   profiles: Record<string, UserProfile>; // keyed by telegramUserId (as string)
   campuses: Campus[];                     // written on save for the live map
+  supportTickets: SupportTicket[];
 }
