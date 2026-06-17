@@ -4,7 +4,7 @@ import { loadConfig } from './config.js';
 import { Store } from './store.js';
 import type { GroupWithMembers } from './store.js';
 import type { Language } from './types.js';
-import { t, LANGUAGES } from './i18n.js';
+import { t } from './i18n.js';
 import { CAMPUSES } from './campuses.js';
 import { startOnboarding, advance, type OnboardingState } from './onboarding.js';
 import { formatGroupFormed, safeSend } from './notify.js';
@@ -67,6 +67,9 @@ bot.on('message:text', async (ctx, next) => {
   const uid = ctx.from.id;
   const state = onboarding.get(uid);
   if (!state) return next(); // not onboarding → fall through to commands
+
+  // Let slash-commands fall through to their registered handlers even during onboarding.
+  if (ctx.message.text.startsWith('/')) return next();
 
   if (state.step === 'language') {
     const lang = LANG_BY_LABEL[ctx.message.text];
