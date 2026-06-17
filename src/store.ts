@@ -1,8 +1,9 @@
 import { readFile, writeFile, rename, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { BotState, Participant, Group } from './types.js';
-import { findGroups, optimizeGroups } from './matcher.js';
+import type { BotState, Participant, Group, UserProfile } from './types.js';
+import { findGroups, optimizeGroups, type FormedGroup } from './matcher.js';
+import { CAMPUSES } from './campuses.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DEFAULT_PATH = path.resolve(__dirname, '../data/state.json');
@@ -14,6 +15,9 @@ export interface NewParticipant {
   displayName: string;
   lat: number;
   lng: number;
+  campusId: string;
+  phone: string;
+  language: import('./types.js').Language;
 }
 
 /** A persisted group together with its resolved member participants. */
@@ -57,11 +61,14 @@ export class Store {
       state = JSON.parse(raw) as BotState;
     } catch (err) {
       if ((err as NodeJS.ErrnoException).code === 'ENOENT') {
-        state = { seq: 0, participants: [], groups: [] };
+        state = { seq: 0, participants: [], groups: [], profiles: {}, campuses: CAMPUSES };
       } else {
         throw err;
       }
     }
+    // normalize: ensure new fields exist and campuses are canonical
+    state.profiles ??= {};
+    state.campuses = CAMPUSES;
     return new Store(state, filePath);
   }
 
@@ -88,6 +95,16 @@ export class Store {
     return this.state.participants.filter((p) => p.telegramUserId === telegramUserId);
   }
 
+  /** Returns the stored onboarding profile for a Telegram account, if any. */
+  getProfile(telegramUserId: number): UserProfile | undefined {
+    return this.state.profiles[String(telegramUserId)];
+  }
+
+  /** Stores/overwrites the onboarding profile for a Telegram account. */
+  setProfile(telegramUserId: number, profile: UserProfile): void {
+    this.state.profiles[String(telegramUserId)] = profile;
+  }
+
   /** Drops a user's waiting participants (used in non-test mode to enforce one location). */
   removeWaitingByUser(telegramUserId: number): void {
     this.state.participants = this.state.participants.filter(
@@ -97,25 +114,34 @@ export class Store {
 
   /** Runs the matcher over the waiting pool, persisting any new groups in memory. */
   private runMatch(radiusKm: number, groupSize: number): GroupWithMembers[] {
-    const formed = findGroups(this.waiting(), radiusKm, groupSize);
+    const byCampus = new Map<string, Participant[]>();
+    for (const p of this.waiting()) {
+      const arr = byCampus.get(p.campusId) ?? [];
+      arr.push(p);
+      byCampus.set(p.campusId, arr);
+    }
+
     const result: GroupWithMembers[] = [];
-    for (const fg of formed) {
-      const groupId = this.nextId('group');
-      const members = fg.memberIds
-        .map((id) => this.byId(id))
-        .filter((p): p is Participant => p !== null);
-      const group: Group = {
-        groupId,
-        memberIds: fg.memberIds,
-        centroid: fg.centroid,
-        createdAt: new Date().toISOString(),
-      };
-      this.state.groups.push(group);
-      for (const m of members) {
-        m.status = 'grouped';
-        m.groupId = groupId;
+    for (const pool of byCampus.values()) {
+      const formed = findGroups(pool, radiusKm, groupSize);
+      for (const fg of formed) {
+        const groupId = this.nextId('group');
+        const members = fg.memberIds
+          .map((id) => this.byId(id))
+          .filter((p): p is Participant => p !== null);
+        const group: Group = {
+          groupId,
+          memberIds: fg.memberIds,
+          centroid: fg.centroid,
+          createdAt: new Date().toISOString(),
+        };
+        this.state.groups.push(group);
+        for (const m of members) {
+          m.status = 'grouped';
+          m.groupId = groupId;
+        }
+        result.push({ group, members });
       }
-      result.push({ group, members });
     }
     return result;
   }
@@ -129,6 +155,9 @@ export class Store {
       displayName: input.displayName,
       lat: input.lat,
       lng: input.lng,
+      campusId: input.campusId,
+      phone: input.phone,
+      language: input.language,
       status: 'waiting',
       groupId: null,
       createdAt: new Date().toISOString(),
@@ -184,12 +213,23 @@ export class Store {
    * @returns How many resulting groups differ from the previous grouping.
    */
   rebuild(radiusKm: number, groupSize: number): { changed: number } {
-    const layout = optimizeGroups(this.state.participants, this.state.groups, radiusKm, groupSize);
+    const participants = this.state.participants;
+    const campusOf = (id: string): string | undefined =>
+      participants.find((p) => p.id === id)?.campusId;
+
+    const campusIds = [...new Set(participants.map((p) => p.campusId))];
+    const layoutGroups: FormedGroup[] = [];
+    for (const cid of campusIds) {
+      const parts = participants.filter((p) => p.campusId === cid);
+      const grps = this.state.groups.filter((g) => campusOf(g.memberIds[0]) === cid);
+      const layout = optimizeGroups(parts, grps, radiusKm, groupSize);
+      layoutGroups.push(...layout.groups);
+    }
 
     const key = (ids: string[]): string => [...ids].sort().join(',');
     const oldSets = new Set(this.state.groups.map((g) => key(g.memberIds)));
 
-    const newGroups: Group[] = layout.groups.map((fg) => ({
+    const newGroups: Group[] = layoutGroups.map((fg) => ({
       groupId: this.nextId('group'),
       memberIds: fg.memberIds,
       centroid: fg.centroid,
@@ -199,7 +239,7 @@ export class Store {
     const groupIdByMember = new Map<string, string>();
     for (const g of newGroups) for (const id of g.memberIds) groupIdByMember.set(id, g.groupId);
 
-    for (const p of this.state.participants) {
+    for (const p of participants) {
       const gid = groupIdByMember.get(p.id);
       if (gid) {
         p.status = 'grouped';
