@@ -72,3 +72,21 @@ test('leave by a waiting member just removes them', async () => {
   assert.equal(result.dissolvedGroup, null);
   assert.equal(store.getState().participants.length, 0);
 });
+
+test('participantsByUser returns only that user\'s participants', async () => {
+  const store = await Store.load(tmpPath());
+  store.joinAndMatch(np(41.30, 69.28, 1), 5, 3);
+  store.joinAndMatch(np(41.31, 69.28, 2), 5, 3);
+  store.joinAndMatch(np(41.30, 69.29, 1), 5, 3);
+  assert.equal(store.participantsByUser(1).length, 2);
+  assert.equal(store.participantsByUser(2).length, 1);
+});
+
+test('removeWaitingByUser drops only that user\'s waiting participants', async () => {
+  const store = await Store.load(tmpPath());
+  store.joinAndMatch(np(41.30, 69.28, 1), 5, 3);
+  store.joinAndMatch(np(41.31, 69.28, 2), 5, 3);
+  store.removeWaitingByUser(1);
+  assert.equal(store.participantsByUser(1).length, 0);
+  assert.equal(store.participantsByUser(2).length, 1);
+});

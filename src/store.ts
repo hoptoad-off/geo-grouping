@@ -65,6 +65,7 @@ export class Store {
     return new Store(state, filePath);
   }
 
+  /** Returns the live internal state object — read only, do not mutate. */
   getState(): BotState {
     return this.state;
   }
@@ -153,7 +154,10 @@ export class Store {
     }
 
     const groupId = participant.groupId!;
-    const group = this.state.groups.find((g) => g.groupId === groupId)!;
+    const group = this.state.groups.find((g) => g.groupId === groupId);
+    if (!group) {
+      throw new Error(`Invariant violation: group ${groupId} for participant ${participantId} is missing`);
+    }
     const others = this.state.participants.filter(
       (p) => p.groupId === groupId && p.id !== participantId
     );
@@ -173,12 +177,15 @@ export class Store {
   }
 
   /** Atomically persists state to disk; concurrent calls are serialized. */
-  async save(): Promise<void> {
-    this.writeChain = this.writeChain.then(async () => {
+  save(): Promise<void> {
+    const attempt = this.writeChain.then(async () => {
       const tmp = `${this.filePath}.tmp`;
       await writeFile(tmp, JSON.stringify(this.state, null, 2), 'utf-8');
       await rename(tmp, this.filePath);
     });
-    return this.writeChain;
+    // Keep the chain resolvable so one failed write doesn't reject all future saves,
+    // while still surfacing the error to this caller.
+    this.writeChain = attempt.catch(() => {});
+    return attempt;
   }
 }
