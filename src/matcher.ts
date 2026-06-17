@@ -135,11 +135,21 @@ export function optimizeGroups(
       return { groups, waitingIds };
     }
 
+    let lockedSomething = false;
     for (const id of orphaned) {
       const g = originalGroupByMember.get(id);
-      if (!g || lockedGroups.some((lg) => lg.groupId === g.groupId)) continue;
+      if (!g) {
+        throw new Error(
+          `optimizeGroups: grouped participant ${id} has no original group (inconsistent state)`
+        );
+      }
+      if (lockedGroups.some((lg) => lg.groupId === g.groupId)) continue;
       lockedGroups.push(g);
       for (const m of g.memberIds) lockedIds.add(m);
+      lockedSomething = true;
+    }
+    if (!lockedSomething) {
+      throw new Error('optimizeGroups: could not lock any group for orphaned members (would loop)');
     }
   }
 }

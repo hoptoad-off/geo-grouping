@@ -125,3 +125,13 @@ test('optimizeGroups leaves a far waiting point in the queue', () => {
 test('optimizeGroups returns nothing for empty input', () => {
   assert.deepEqual(optimizeGroups([], [], 5, 3), { groups: [], waitingIds: [] });
 });
+
+test('optimizeGroups throws if a grouped participant has no original group', () => {
+  const ps = [
+    gp('a', 41.300, 69.280, 'grouped', 'group_999', '2026-01-01T00:00:01.000Z'),
+    gp('b', 41.800, 69.280, 'waiting', null, '2026-01-01T00:00:02.000Z'),
+    gp('c', 41.801, 69.280, 'waiting', null, '2026-01-01T00:00:03.000Z'),
+  ];
+  // 'a' is grouped but existingGroups is empty -> no original group to lock.
+  assert.throws(() => optimizeGroups(ps, [], 5, 3), /no original group/);
+});
