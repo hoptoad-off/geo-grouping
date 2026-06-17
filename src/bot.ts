@@ -4,6 +4,7 @@ import { loadConfig } from './config.js';
 import { Store } from './store.js';
 import type { GroupWithMembers } from './store.js';
 import { formatGroupFormed, safeSend } from './notify.js';
+import { createViewerServer } from './viewer-server.js';
 
 const config = loadConfig();
 const store = await Store.load();
@@ -120,6 +121,22 @@ bot.command('reset', async (ctx) => {
 
 bot.catch((err) => {
   console.error('Bot error:', err);
+});
+
+const VIEWER_PORT = Number(process.env.PORT) || 8080;
+const VIEWER_HOST = process.env.HOST || '127.0.0.1';
+const viewer = createViewerServer({
+  rebuild: async () => {
+    const result = store.rebuild(config.groupRadiusKm, config.groupSize);
+    await store.save();
+    return result;
+  },
+});
+viewer.on('error', (err) => {
+  console.error('Viewer server error (live map disabled):', err instanceof Error ? err.message : err);
+});
+viewer.listen(VIEWER_PORT, VIEWER_HOST, () => {
+  console.log(`✓ Live map at http://${VIEWER_HOST}:${VIEWER_PORT}/live`);
 });
 
 console.log('Bot starting (long polling)…');

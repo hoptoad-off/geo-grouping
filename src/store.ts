@@ -2,7 +2,7 @@ import { readFile, writeFile, rename, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { BotState, Participant, Group } from './types.js';
-import { findGroups } from './matcher.js';
+import { findGroups, optimizeGroups } from './matcher.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DEFAULT_PATH = path.resolve(__dirname, '../data/state.json');
@@ -174,6 +174,45 @@ export class Store {
       dissolvedGroup: { group, notifiedMembers: others },
       formedGroups,
     };
+  }
+
+  /**
+   * Globally re-optimizes groups (nearest neighbors) without orphaning any
+   * previously-grouped participant. Computes the new layout with the pure
+   * optimizeGroups (so a throw leaves state untouched), then applies it.
+   *
+   * @returns How many resulting groups differ from the previous grouping.
+   */
+  rebuild(radiusKm: number, groupSize: number): { changed: number } {
+    const layout = optimizeGroups(this.state.participants, this.state.groups, radiusKm, groupSize);
+
+    const key = (ids: string[]): string => [...ids].sort().join(',');
+    const oldSets = new Set(this.state.groups.map((g) => key(g.memberIds)));
+
+    const newGroups: Group[] = layout.groups.map((fg) => ({
+      groupId: this.nextId('group'),
+      memberIds: fg.memberIds,
+      centroid: fg.centroid,
+      createdAt: new Date().toISOString(),
+    }));
+
+    const groupIdByMember = new Map<string, string>();
+    for (const g of newGroups) for (const id of g.memberIds) groupIdByMember.set(id, g.groupId);
+
+    for (const p of this.state.participants) {
+      const gid = groupIdByMember.get(p.id);
+      if (gid) {
+        p.status = 'grouped';
+        p.groupId = gid;
+      } else {
+        p.status = 'waiting';
+        p.groupId = null;
+      }
+    }
+    this.state.groups = newGroups;
+
+    const changed = newGroups.filter((g) => !oldSets.has(key(g.memberIds))).length;
+    return { changed };
   }
 
   /** Atomically persists state to disk; concurrent calls are serialized. */

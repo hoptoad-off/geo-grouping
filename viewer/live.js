@@ -150,3 +150,21 @@ async function refresh() {
 
 refresh();
 setInterval(refresh, REFRESH_MS);
+
+const rebuildBtn = document.getElementById('rebuild-btn');
+rebuildBtn.addEventListener('click', async () => {
+  if (!confirm('Пересобрать все группы заново?')) return;
+  rebuildBtn.disabled = true;
+  const original = rebuildBtn.textContent;
+  rebuildBtn.textContent = 'Пересборка…';
+  try {
+    const resp = await fetch('/rebuild', { method: 'POST' });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    await refresh();
+  } catch (e) {
+    showError('Не удалось пересобрать группы: ' + e.message);
+  } finally {
+    rebuildBtn.disabled = false;
+    rebuildBtn.textContent = original;
+  }
+});
