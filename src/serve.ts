@@ -34,7 +34,7 @@ const server = createServer(async (req, res) => {
         ? '/viewer/live.html'
         : url.pathname;
 
-  // Expose all of viewer/ but only the single output.json from data/ — the
+  // Expose all of viewer/ but only output.json and state.json from data/ — the
   // raw input.json and any other data files stay private. The URL parser
   // already normalizes "../" and "%2e%2e/", and the path.sep suffix on each
   // prefix prevents sibling-directory bypass (e.g. ROOT/viewer-secret).
