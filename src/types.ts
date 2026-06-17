@@ -1,3 +1,7 @@
+import type { Campus } from './campuses.js';
+import type { Language } from './i18n.js';
+export type { Language };
+
 /**
  * A single geolocation point loaded from the data source.
  * Extra fields are allowed so DB rows with additional columns
@@ -45,6 +49,9 @@ export interface Participant {
   displayName: string;
   lat: number;
   lng: number;
+  campusId: string;   // which branch this submission targets
+  phone: string;      // phone shared via Telegram contact
+  language: Language; // recipient's language for notifications
   status: ParticipantStatus;
   groupId: string | null; // set only when status === 'grouped'
   createdAt: string; // ISO timestamp
@@ -58,9 +65,18 @@ export interface Group {
   createdAt: string; // ISO timestamp
 }
 
+/** Persisted onboarding result for one Telegram account. */
+export interface UserProfile {
+  language: Language;
+  campusId: string;
+  phone: string;
+}
+
 /** Full persisted bot state. */
 export interface BotState {
   seq: number; // monotonic counter for id generation
   participants: Participant[];
   groups: Group[];
+  profiles: Record<string, UserProfile>; // keyed by telegramUserId (as string)
+  campuses: Campus[];                     // written on save for the live map
 }

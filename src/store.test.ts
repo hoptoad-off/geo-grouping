@@ -5,9 +5,13 @@ import path from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { Store } from './store.js';
 import type { NewParticipant } from './store.js';
+import { CAMPUSES } from './campuses.js';
 
-function np(lat: number, lng: number, uid = 1): NewParticipant {
-  return { telegramUserId: uid, chatId: uid, displayName: `u${uid}`, lat, lng };
+function np(lat: number, lng: number, uid = 1, campusId = 'mirzo_ulugbek'): NewParticipant {
+  return {
+    telegramUserId: uid, chatId: uid, displayName: `u${uid}`,
+    lat, lng, campusId, phone: '+998900000000', language: 'ru',
+  };
 }
 
 function tmpPath(): string {
@@ -16,7 +20,9 @@ function tmpPath(): string {
 
 test('load returns empty state for a missing file', async () => {
   const store = await Store.load(tmpPath());
-  assert.deepEqual(store.getState(), { seq: 0, participants: [], groups: [] });
+  assert.deepEqual(store.getState(), {
+    seq: 0, participants: [], groups: [], profiles: {}, campuses: CAMPUSES,
+  });
 });
 
 test('joinAndMatch forms a group once three are close', async () => {
@@ -131,4 +137,45 @@ test('rebuild on empty state is a no-op', async () => {
   const result = store.rebuild(5, 3);
   assert.equal(result.changed, 0);
   assert.deepEqual(store.getState().groups, []);
+});
+
+test('joinAndMatch never mixes campuses', async () => {
+  const store = await Store.load(tmpPath());
+  // три точки рядом, но разные кампусы → группа не собирается
+  store.joinAndMatch(np(41.30, 69.28, 1, 'mirzo_ulugbek'), 5, 3);
+  store.joinAndMatch(np(41.31, 69.28, 2, 'yashnobod'), 5, 3);
+  const third = store.joinAndMatch(np(41.30, 69.29, 3, 'mirzo_ulugbek'), 5, 3);
+  assert.equal(third.formedGroups.length, 0);
+
+  // добавляем ещё одного того же кампуса → собирается ровно их кампус (3-й mirzo)
+  const fourth = store.joinAndMatch(np(41.305, 69.285, 4, 'mirzo_ulugbek'), 5, 3);
+  assert.equal(fourth.formedGroups.length, 1);
+  for (const m of fourth.formedGroups[0].members) {
+    assert.equal(m.campusId, 'mirzo_ulugbek');
+  }
+});
+
+test('rebuild keeps campuses separate', async () => {
+  const store = await Store.load(tmpPath());
+  for (let i = 0; i < 3; i++) store.joinAndMatch(np(41.30 + i * 0.001, 69.28, 10 + i, 'mirzo_ulugbek'), 5, 3);
+  for (let i = 0; i < 3; i++) store.joinAndMatch(np(41.25 + i * 0.001, 69.32, 20 + i, 'yashnobod'), 5, 3);
+  store.rebuild(5, 3);
+  for (const g of store.getState().groups) {
+    const campuses = new Set(
+      g.memberIds.map((id) => store.getState().participants.find((p) => p.id === id)!.campusId)
+    );
+    assert.equal(campuses.size, 1);
+  }
+});
+
+test('getProfile/setProfile round-trip and persist', async () => {
+  const file = tmpPath();
+  const store = await Store.load(file);
+  assert.equal(store.getProfile(7), undefined);
+  store.setProfile(7, { language: 'uz', campusId: 'yashnobod', phone: '+998901112233' });
+  await store.save();
+  const reloaded = await Store.load(file);
+  assert.deepEqual(reloaded.getProfile(7), {
+    language: 'uz', campusId: 'yashnobod', phone: '+998901112233',
+  });
 });

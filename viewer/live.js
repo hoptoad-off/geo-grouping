@@ -4,6 +4,13 @@ const GROUP_PALETTE = [
   '#e53935', '#00897b', '#fdd835', '#6d4c41',
 ];
 const WAITING_COLOR = '#757575';
+const CAMPUS_COLOR = '#d81b60';
+const CAMPUS_NAMES = { mirzo_ulugbek: 'Mirzo Ulugbek', yashnobod: 'Yashnobod' };
+
+function campusName(id) {
+  return CAMPUS_NAMES[id] || id;
+}
+
 const DEFAULT_CENTER = [41.3111, 69.2797];
 
 /**
@@ -60,6 +67,17 @@ function render(state) {
   const groups = state.groups || [];
   const allLatLngs = [];
 
+  const campuses = state.campuses || [];
+  for (const c of campuses) {
+    L.marker([c.lat, c.lng], {
+      icon: L.divIcon({
+        className: 'campus-icon',
+        html: '<div class="campus-icon" style="background:' + CAMPUS_COLOR + '">★</div>',
+        iconSize: [26, 26], iconAnchor: [13, 13],
+      }),
+    }).addTo(layer).bindPopup('<b>' + esc(campusName(c.id)) + '</b><br>кампус');
+  }
+
   groups.forEach((group, index) => {
     const color = groupColor(index);
     const members = group.memberIds.map((id) => byId[id]).filter(Boolean);
@@ -70,6 +88,8 @@ function render(state) {
         radius: 7, color: '#fff', weight: 1.5, fillColor: color, fillOpacity: 0.95
       }).addTo(layer).bindPopup(
         '<b>' + esc(p.displayName) + '</b><br>id: ' + esc(p.id) +
+        '<br>📞 ' + esc(p.phone) +
+        '<br>🏫 ' + esc(campusName(p.campusId)) +
         '<br>' + p.lat.toFixed(4) + ', ' + p.lng.toFixed(4) +
         '<br>Группа: ' + esc(group.groupId)
       );
@@ -99,6 +119,8 @@ function render(state) {
       radius: 7, color: '#fff', weight: 1.5, fillColor: WAITING_COLOR, fillOpacity: 0.95
     }).addTo(layer).bindPopup(
       '<b>' + esc(p.displayName) + '</b><br>id: ' + esc(p.id) +
+      '<br>📞 ' + esc(p.phone) +
+      '<br>🏫 ' + esc(campusName(p.campusId)) +
       '<br>' + p.lat.toFixed(4) + ', ' + p.lng.toFixed(4) +
       '<br><i>в очереди</i>'
     );
@@ -120,7 +142,8 @@ function render(state) {
     card.style.borderLeftColor = color;
     card.innerHTML =
       '<h2>' + esc(group.groupId) + '</h2>' +
-      '<ul>' + members.map((p) => '<li>• ' + esc(p.displayName) + '</li>').join('') + '</ul>';
+      '<div class="campus">🏫 ' + esc(campusName(members[0] ? members[0].campusId : '')) + '</div>' +
+      '<ul>' + members.map((p) => '<li>• ' + esc(p.displayName) + ' — ' + esc(p.phone) + '</li>').join('') + '</ul>';
     card.addEventListener('click', () => {
       const ll = members.map((p) => [p.lat, p.lng]);
       if (ll.length) map.fitBounds(ll, { padding: [60, 60], maxZoom: 15 });
