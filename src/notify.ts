@@ -1,6 +1,7 @@
 import type { Api, RawApi } from 'grammy';
 import type { Participant } from './types.js';
 import { haversineKm } from './grouping.js';
+import { t } from './i18n.js';
 
 type BotApi = Api<RawApi>;
 
@@ -20,12 +21,14 @@ export async function safeSend(api: BotApi, chatId: number, text: string): Promi
 }
 
 /**
- * Builds the "group formed" message from one member's perspective, listing the
- * other members and their distance from `self`.
+ * Builds the "group formed" message from one member's perspective, in that member's
+ * language, listing the other members and their distance from `self`.
  */
 export function formatGroupFormed(members: Participant[], self: Participant): string {
+  const lang = self.language;
+  const km = t(lang, 'unit.km');
   const lines = members
     .filter((m) => m.id !== self.id)
-    .map((o) => `• ${o.displayName} — ${haversineKm(self.lat, self.lng, o.lat, o.lng).toFixed(1)} км`);
-  return `✅ Группа собрана!\nВаши соседи:\n${lines.join('\n')}`;
+    .map((o) => `• ${o.displayName} — ${haversineKm(self.lat, self.lng, o.lat, o.lng).toFixed(1)} ${km}`);
+  return `${t(lang, 'group.formedTitle')}\n${t(lang, 'group.neighbors')}\n${lines.join('\n')}`;
 }
