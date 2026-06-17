@@ -20,12 +20,10 @@ function buildGroup(
   groupSize: number
 ): Participant[] | null {
   const near = candidates
-    .filter((c) => haversineKm(seed.lat, seed.lng, c.lat, c.lng) <= radiusKm)
-    .sort(
-      (a, b) =>
-        haversineKm(seed.lat, seed.lng, a.lat, a.lng) -
-        haversineKm(seed.lat, seed.lng, b.lat, b.lng)
-    );
+    .map((c) => ({ c, d: haversineKm(seed.lat, seed.lng, c.lat, c.lng) }))
+    .filter(({ d }) => d <= radiusKm)
+    .sort((a, b) => a.d - b.d)
+    .map(({ c }) => c);
 
   const members: Participant[] = [seed];
   for (const c of near) {

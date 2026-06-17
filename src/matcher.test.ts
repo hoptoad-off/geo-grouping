@@ -50,3 +50,18 @@ test('skips a seed without partners but groups the rest', () => {
   assert.equal(groups.length, 1);
   assert.ok(!groups[0].memberIds.includes('f'));
 });
+
+test('respects a non-default groupSize', () => {
+  const waiting = [
+    p('a', 41.30, 69.28, T(1)),
+    p('b', 41.31, 69.28, T(2)),
+    p('c', 41.30, 69.29, T(3)),
+  ];
+  const groups = findGroups(waiting, 5, 2);
+  assert.equal(groups.length, 1);
+  assert.equal(groups[0].memberIds.length, 2);
+});
+
+test('returns no groups for empty input', () => {
+  assert.deepEqual(findGroups([], 5, 3), []);
+});
