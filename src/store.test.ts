@@ -90,3 +90,45 @@ test('removeWaitingByUser drops only that user\'s waiting participants', async (
   assert.equal(store.participantsByUser(1).length, 0);
   assert.equal(store.participantsByUser(2).length, 1);
 });
+
+test('rebuild keeps a grouped member in its group instead of orphaning it', async () => {
+  const store = await Store.load(tmpPath());
+  store.joinAndMatch(np(41.300, 69.280, 1), 5, 3);
+  store.joinAndMatch(np(41.301, 69.280, 2), 5, 3);
+  store.joinAndMatch(np(41.340, 69.280, 3), 5, 3);
+  store.joinAndMatch(np(41.300, 69.2805, 4), 5, 3);
+
+  const result = store.rebuild(5, 3);
+
+  assert.equal(store.getState().groups.length, 1);
+  assert.equal(store.getState().participants.filter((p) => p.status === 'grouped').length, 3);
+  assert.equal(store.getState().participants.filter((p) => p.status === 'waiting').length, 1);
+  assert.equal(result.changed, 0);
+});
+
+test('rebuild reshuffles into tighter groups and reports changed count', async () => {
+  const store = await Store.load(tmpPath());
+  store.joinAndMatch(np(41.300, 69.280, 1), 5, 3);   // a
+  store.joinAndMatch(np(41.301, 69.280, 2), 5, 3);   // b
+  store.joinAndMatch(np(41.340, 69.280, 3), 5, 3);   // c -> [a,b,c]
+  store.joinAndMatch(np(41.300, 69.2805, 4), 5, 3);  // d (near a,b)
+  store.joinAndMatch(np(41.341, 69.280, 5), 5, 3);   // e (near c)
+  store.joinAndMatch(np(41.340, 69.2805, 6), 5, 3);  // f (near c) -> [d,e,f]
+
+  assert.equal(store.getState().groups.length, 2);
+  const result = store.rebuild(5, 3);
+
+  assert.equal(store.getState().groups.length, 2);
+  assert.equal(store.getState().participants.filter((p) => p.status === 'grouped').length, 6);
+  const aMember = store.getState().participants.find((p) => p.id === 'u_001');
+  const aGroup = store.getState().groups.find((g) => g.groupId === aMember.groupId);
+  assert.ok(aGroup.memberIds.includes('u_005'));
+  assert.equal(result.changed, 2);
+});
+
+test('rebuild on empty state is a no-op', async () => {
+  const store = await Store.load(tmpPath());
+  const result = store.rebuild(5, 3);
+  assert.equal(result.changed, 0);
+  assert.deepEqual(store.getState().groups, []);
+});
