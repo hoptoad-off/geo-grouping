@@ -27,7 +27,12 @@ const MIME: Record<string, string> = {
  */
 const server = createServer(async (req, res) => {
   const url = new URL(req.url ?? '/', `http://localhost:${PORT}`);
-  let filePath = url.pathname === '/' ? '/viewer/index.html' : url.pathname;
+  let filePath =
+    url.pathname === '/'
+      ? '/viewer/index.html'
+      : url.pathname === '/live'
+        ? '/viewer/live.html'
+        : url.pathname;
 
   // Expose all of viewer/ but only the single output.json from data/ — the
   // raw input.json and any other data files stay private. The URL parser
@@ -36,7 +41,8 @@ const server = createServer(async (req, res) => {
   const resolved = path.resolve(ROOT, '.' + filePath);
   const allowed =
     resolved.startsWith(path.join(ROOT, 'viewer') + path.sep) ||
-    resolved === path.join(ROOT, 'data', 'output.json');
+    resolved === path.join(ROOT, 'data', 'output.json') ||
+    resolved === path.join(ROOT, 'data', 'state.json');
   if (!allowed) {
     res.writeHead(403).end('Forbidden');
     return;
