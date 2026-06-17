@@ -44,7 +44,9 @@ export function haversineKm(
  * @param points - Points to average (must be non-empty).
  * @returns Centroid coordinates { lat, lng }.
  */
-export function computeCentroid(points: GeoPoint[]): { lat: number; lng: number } {
+export function computeCentroid(
+  points: ReadonlyArray<{ lat: number; lng: number }>
+): { lat: number; lng: number } {
   const lat = points.reduce((sum, p) => sum + p.lat, 0) / points.length;
   const lng = points.reduce((sum, p) => sum + p.lng, 0) / points.length;
   return { lat, lng };

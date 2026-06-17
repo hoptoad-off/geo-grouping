@@ -33,3 +33,34 @@ export interface GroupingResult {
   unassigned: GeoPoint[]; // remainder points if count not divisible by 3
   generatedAt: string; // ISO timestamp
 }
+
+/** Status of a participant in the matching lifecycle. */
+export type ParticipantStatus = 'waiting' | 'grouped';
+
+/** One location submission from a Telegram user awaiting or in a group. */
+export interface Participant {
+  id: string; // e.g. "u_007"
+  telegramUserId: number;
+  chatId: number;
+  displayName: string;
+  lat: number;
+  lng: number;
+  status: ParticipantStatus;
+  groupId: string | null; // set only when status === 'grouped'
+  createdAt: string; // ISO timestamp
+}
+
+/** A formed group of participants. */
+export interface Group {
+  groupId: string; // e.g. "group_001"
+  memberIds: string[];
+  centroid: { lat: number; lng: number };
+  createdAt: string; // ISO timestamp
+}
+
+/** Full persisted bot state. */
+export interface BotState {
+  seq: number; // monotonic counter for id generation
+  participants: Participant[];
+  groups: Group[];
+}
