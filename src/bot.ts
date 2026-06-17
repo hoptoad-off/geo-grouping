@@ -1,4 +1,4 @@
-import { Bot, Keyboard, InlineKeyboard } from 'grammy';
+import { Bot, Keyboard } from 'grammy';
 import type { Api, RawApi, Context } from 'grammy';
 import { loadConfig } from './config.js';
 import { Store } from './store.js';
@@ -7,7 +7,7 @@ import type { Language } from './types.js';
 import { t } from './i18n.js';
 import { CAMPUSES } from './campuses.js';
 import { startOnboarding, advance, type OnboardingState } from './onboarding.js';
-import { menuScreen, type Screen, type RequestState, type MenuButton } from './settings-menu.js';
+import { mainMenuLayout, type MenuButton, type RequestState } from './main-menu.js';
 import { formatGroupFormed, safeSend } from './notify.js';
 import { createViewerServer } from './viewer-server.js';
 
@@ -19,6 +19,8 @@ const bot = new Bot(config.botToken);
 const onboarding = new Map<number, OnboardingState>();
 /** Users we're awaiting a free-text support message from (transient). */
 const awaitingSupport = new Set<number>();
+/** Users currently picking a new language from the sub-keyboard (transient). */
+const awaitingLanguageChange = new Set<number>();
 
 const LANG_BY_LABEL: Record<string, Language> = { English: 'en', 'Русский': 'ru', "O'zbek": 'uz' };
 const LANG_LABELS = Object.keys(LANG_BY_LABEL);
@@ -37,30 +39,33 @@ function phoneKeyboard(lang: Language): Keyboard {
 function locationKeyboard(lang: Language): Keyboard {
   return new Keyboard().requestLocation(t(lang, 'btn.sendLocation')).resized();
 }
-/** Main reply menu: location button only when the prod-hide rule allows, plus Settings. */
-function mainMenuKeyboard(lang: Language, showLocation: boolean): Keyboard {
-  const kb = new Keyboard();
-  if (showLocation) kb.requestLocation(t(lang, 'btn.sendLocation')).row();
-  kb.text(t(lang, 'btn.settings'));
-  return kb.resized();
+/** Sub-keyboard for changing language: the three fixed labels + a Back row. */
+function languageChooseKeyboard(lang: Language): Keyboard {
+  return new Keyboard()
+    .text(LANG_LABELS[0]).text(LANG_LABELS[1]).text(LANG_LABELS[2]).row()
+    .text(t(lang, 'btn.back'))
+    .resized();
 }
-/** Builds an inline keyboard from a pure menu layout, localizing each label. */
-function inlineFrom(lang: Language, rows: MenuButton[][]): InlineKeyboard {
-  const kb = new InlineKeyboard();
+/** Builds the bottom reply keyboard from a pure layout (text vs requestLocation). */
+function buildMainKeyboard(lang: Language, rows: MenuButton[][]): Keyboard {
+  const kb = new Keyboard();
   rows.forEach((row, i) => {
-    for (const b of row) kb.text(t(lang, b.labelKey), b.data);
+    for (const b of row) {
+      if (b.kind === 'location') kb.requestLocation(t(lang, b.labelKey));
+      else kb.text(t(lang, b.labelKey));
+    }
     if (i < rows.length - 1) kb.row();
   });
-  return kb;
+  return kb.resized();
+}
+function mainMenuKeyboard(uid: number, lang: Language): Keyboard {
+  return buildMainKeyboard(lang, mainMenuLayout(requestStateOf(uid), config.testMode));
 }
 function campusByLabel(lang: Language, label: string): string | undefined {
   return CAMPUSES.find((c) => t(lang, c.nameKey) === label)?.id;
 }
 function langOf(uid: number): Language {
   return store.getProfile(uid)?.language ?? 'en';
-}
-function showLocationButton(uid: number): boolean {
-  return config.testMode || !store.hasActiveParticipant(uid);
 }
 function requestStateOf(uid: number): RequestState {
   const mine = store.participantsByUser(uid);
@@ -76,19 +81,16 @@ function statusText(uid: number, lang: Language): string {
   );
   return t(lang, 'status.header') + '\n' + lines.join('\n');
 }
-function screenTitle(screen: Screen, uid: number, lang: Language): string {
-  if (screen === 'status') return statusText(uid, lang);
-  if (screen === 'general') return t(lang, 'menu.general');
-  if (screen === 'lang') return t(lang, 'menu.lang');
-  return t(lang, 'menu.root');
-}
-/** Edits the menu message in place; ignores Telegram "message is not modified". */
-async function safeEdit(ctx: Context, text: string, markup: InlineKeyboard): Promise<void> {
-  try {
-    await ctx.editMessageText(text, { reply_markup: markup });
-  } catch {
-    /* e.g. content unchanged — safe to ignore */
-  }
+
+type MenuAction = 'status' | 'support' | 'language' | 'unsubscribe' | 'relocate';
+/** Maps a tapped reply-button label (in the user's language) to a menu action. */
+function matchMenuAction(lang: Language, text: string): MenuAction | null {
+  if (text === t(lang, 'btn.statusItem')) return 'status';
+  if (text === t(lang, 'btn.support')) return 'support';
+  if (text === t(lang, 'btn.changeLang')) return 'language';
+  if (text === t(lang, 'btn.unsubscribe')) return 'unsubscribe';
+  if (text === t(lang, 'btn.relocate')) return 'relocate';
+  return null;
 }
 
 async function notifyFormed(api: Api<RawApi>, formed: GroupWithMembers[]): Promise<void> {
@@ -108,10 +110,52 @@ async function notifyLeaveResult(api: Api<RawApi>, result: LeaveResult): Promise
   await notifyFormed(api, result.formedGroups);
 }
 
+/** Runs a top-level menu action chosen from the bottom keyboard. */
+async function handleMenuAction(ctx: Context, uid: number, lang: Language, action: MenuAction): Promise<void> {
+  if (action === 'status') {
+    await ctx.reply(statusText(uid, lang), { reply_markup: mainMenuKeyboard(uid, lang) });
+    return;
+  }
+  if (action === 'support') {
+    awaitingSupport.add(uid);
+    await ctx.reply(t(lang, 'support.prompt'));
+    return;
+  }
+  if (action === 'language') {
+    awaitingLanguageChange.add(uid);
+    await ctx.reply(t(lang, 'menu.lang'), { reply_markup: languageChooseKeyboard(lang) });
+    return;
+  }
+  if (action === 'unsubscribe') {
+    const mine = store.participantsByUser(uid);
+    if (mine.length === 0) {
+      await ctx.reply(t(lang, 'status.none'), { reply_markup: mainMenuKeyboard(uid, lang) });
+      return;
+    }
+    const latest = mine.reduce((a, b) => (a.createdAt >= b.createdAt ? a : b));
+    const result = store.leave(latest.id, config.groupRadiusKm, config.groupSize);
+    await store.save();
+    await ctx.reply(t(lang, 'unsubscribe.done'), { reply_markup: mainMenuKeyboard(uid, lang) });
+    await notifyLeaveResult(ctx.api, result);
+    return;
+  }
+  // relocate (queued only)
+  const waiting = store.participantsByUser(uid).filter((p) => p.status === 'waiting');
+  if (waiting.length === 0) {
+    await ctx.reply(t(lang, 'relocate.notQueued'), { reply_markup: mainMenuKeyboard(uid, lang) });
+    return;
+  }
+  const latest = waiting.reduce((a, b) => (a.createdAt >= b.createdAt ? a : b));
+  store.leave(latest.id, config.groupRadiusKm, config.groupSize);
+  await store.save();
+  await ctx.reply(t(lang, 'relocate.prompt'), { reply_markup: locationKeyboard(lang) });
+}
+
 bot.command('start', async (ctx) => {
   const uid = ctx.from!.id;
   onboarding.set(uid, startOnboarding());
   awaitingSupport.delete(uid);
+  awaitingLanguageChange.delete(uid);
   await ctx.reply(t('en', 'onboarding.chooseLanguage'), { reply_markup: languageKeyboard() });
 });
 
@@ -119,62 +163,81 @@ bot.on('message:text', async (ctx, next) => {
   const uid = ctx.from.id;
   const text = ctx.message.text;
   if (text.startsWith('/')) return next();
+  const lang = langOf(uid);
 
-  // 1) capture a support message if we're waiting for one
+  // 1) language-change mode
+  if (awaitingLanguageChange.has(uid)) {
+    const picked = LANG_BY_LABEL[text];
+    if (picked) {
+      store.setLanguage(uid, picked);
+      await store.save();
+      awaitingLanguageChange.delete(uid);
+      await ctx.reply(t(picked, 'lang.changed'), { reply_markup: mainMenuKeyboard(uid, picked) });
+      return;
+    }
+    if (text === t(lang, 'btn.back')) {
+      awaitingLanguageChange.delete(uid);
+      await ctx.reply(t(lang, 'menu.root'), { reply_markup: mainMenuKeyboard(uid, lang) });
+      return;
+    }
+    return; // ignore unrecognized input while choosing a language
+  }
+
+  // 2) support-capture mode
   if (awaitingSupport.has(uid)) {
-    const lang = langOf(uid);
-    // Tapping the Settings button cancels support capture instead of filing the label.
-    if (text === t(lang, 'btn.settings')) {
+    const action = matchMenuAction(lang, text);
+    if (!action) {
+      const body = text.trim();
+      if (!body) {
+        await ctx.reply(t(lang, 'support.prompt'));
+        return;
+      }
+      const profile = store.getProfile(uid);
+      store.addSupportTicket({
+        telegramUserId: uid,
+        displayName: ctx.from.first_name ?? 'User',
+        phone: profile?.phone ?? '',
+        language: lang,
+        text: body,
+      });
+      await store.save();
       awaitingSupport.delete(uid);
-      await ctx.reply(t(lang, 'menu.root'), { reply_markup: inlineFrom(lang, menuScreen('root', requestStateOf(uid))) });
+      await ctx.reply(t(lang, 'support.thanks'), { reply_markup: mainMenuKeyboard(uid, lang) });
       return;
     }
-    const body = text.trim();
-    if (!body) {
-      await ctx.reply(t(lang, 'support.prompt'));
-      return;
-    }
-    const profile = store.getProfile(uid);
-    store.addSupportTicket({
-      telegramUserId: uid,
-      displayName: ctx.from.first_name ?? 'User',
-      phone: profile?.phone ?? '',
-      language: lang,
-      text: body,
-    });
-    await store.save();
+    // a menu button was tapped instead → cancel capture and run that action
     awaitingSupport.delete(uid);
-    await ctx.reply(t(lang, 'support.thanks'), { reply_markup: mainMenuKeyboard(lang, showLocationButton(uid)) });
+    await handleMenuAction(ctx, uid, lang, action);
     return;
   }
 
-  // 2) onboarding steps
+  // 3) onboarding steps
   const state = onboarding.get(uid);
   if (state) {
     if (state.step === 'language') {
-      const lang = LANG_BY_LABEL[text];
-      if (!lang) return;
-      const { state: nextState } = advance(state, { type: 'language', value: lang });
+      const picked = LANG_BY_LABEL[text];
+      if (!picked) return;
+      const { state: nextState } = advance(state, { type: 'language', value: picked });
       onboarding.set(uid, nextState);
-      await ctx.reply(t(lang, 'onboarding.chooseCampus'), { reply_markup: campusKeyboard(lang) });
+      await ctx.reply(t(picked, 'onboarding.chooseCampus'), { reply_markup: campusKeyboard(picked) });
       return;
     }
     if (state.step === 'campus') {
-      const lang = state.language!;
-      const campusId = campusByLabel(lang, text);
+      const olang = state.language!;
+      const campusId = campusByLabel(olang, text);
       if (!campusId) return;
       const { state: nextState } = advance(state, { type: 'campus', value: campusId });
       onboarding.set(uid, nextState);
-      await ctx.reply(t(lang, 'onboarding.sharePhone'), { reply_markup: phoneKeyboard(lang) });
+      await ctx.reply(t(olang, 'onboarding.sharePhone'), { reply_markup: phoneKeyboard(olang) });
       return;
     }
     return;
   }
 
-  // 3) main-menu "Settings" button
-  const lang = langOf(uid);
-  if (text === t(lang, 'btn.settings')) {
-    await ctx.reply(t(lang, 'menu.root'), { reply_markup: inlineFrom(lang, menuScreen('root', requestStateOf(uid))) });
+  // 4) top-level menu action
+  const action = matchMenuAction(lang, text);
+  if (action) {
+    await handleMenuAction(ctx, uid, lang, action);
     return;
   }
 });
@@ -197,7 +260,7 @@ bot.on('message:contact', async (ctx) => {
     store.setProfile(uid, profile);
     await store.save();
     onboarding.delete(uid);
-    await ctx.reply(t(lang, 'onboarding.sendLocation'), { reply_markup: mainMenuKeyboard(lang, true) });
+    await ctx.reply(t(lang, 'onboarding.sendLocation'), { reply_markup: mainMenuKeyboard(uid, lang) });
   }
 });
 
@@ -237,7 +300,7 @@ bot.on('message:location', async (ctx) => {
   );
   await store.save();
 
-  const kb = mainMenuKeyboard(lang, showLocationButton(uid));
+  const kb = mainMenuKeyboard(uid, lang);
   if (formedGroups.length === 0) {
     await ctx.reply(t(lang, 'location.accepted'), { reply_markup: kb });
   }
@@ -247,77 +310,12 @@ bot.on('message:location', async (ctx) => {
   }
 });
 
-bot.on('callback_query:data', async (ctx) => {
-  const uid = ctx.from.id;
-  const lang = langOf(uid);
-  const data = ctx.callbackQuery.data;
-
-  if (data === 's:root' || data === 's:status' || data === 's:general' || data === 's:lang') {
-    const screen = data.slice(2) as Screen;
-    await safeEdit(ctx, screenTitle(screen, uid, lang), inlineFrom(lang, menuScreen(screen, requestStateOf(uid))));
-    await ctx.answerCallbackQuery();
-    return;
-  }
-
-  if (data.startsWith('s:lang:')) {
-    const newLang = data.slice('s:lang:'.length) as Language;
-    store.setLanguage(uid, newLang);
-    await store.save();
-    await safeEdit(ctx, t(newLang, 'menu.general'), inlineFrom(newLang, menuScreen('general', requestStateOf(uid))));
-    await ctx.answerCallbackQuery({ text: t(newLang, 'lang.changed') });
-    return;
-  }
-
-  if (data === 's:relocate') {
-    const mine = store.participantsByUser(uid).filter((p) => p.status === 'waiting');
-    if (mine.length === 0) {
-      await ctx.answerCallbackQuery({ text: t(lang, 'relocate.notQueued') });
-      return;
-    }
-    const latest = mine.reduce((a, b) => (a.createdAt >= b.createdAt ? a : b));
-    store.leave(latest.id, config.groupRadiusKm, config.groupSize);
-    await store.save();
-    await ctx.answerCallbackQuery();
-    await ctx.reply(t(lang, 'relocate.prompt'), { reply_markup: locationKeyboard(lang) });
-    return;
-  }
-
-  if (data === 's:leave') {
-    const mine = store.participantsByUser(uid);
-    if (mine.length === 0) {
-      await ctx.answerCallbackQuery({ text: t(lang, 'status.none') });
-      return;
-    }
-    const latest = mine.reduce((a, b) => (a.createdAt >= b.createdAt ? a : b));
-    const result = store.leave(latest.id, config.groupRadiusKm, config.groupSize);
-    await store.save();
-    await notifyLeaveResult(ctx.api, result);
-    try {
-      await ctx.editMessageText(t(lang, 'unsubscribe.done'));
-    } catch {
-      /* ignore unchanged */
-    }
-    await ctx.answerCallbackQuery();
-    await ctx.reply(t(lang, 'menu.root'), { reply_markup: mainMenuKeyboard(lang, showLocationButton(uid)) });
-    return;
-  }
-
-  if (data === 's:support') {
-    awaitingSupport.add(uid);
-    await ctx.answerCallbackQuery();
-    await ctx.reply(t(lang, 'support.prompt'));
-    return;
-  }
-
-  await ctx.answerCallbackQuery();
-});
-
 bot.command('leave', async (ctx) => {
   const uid = ctx.from!.id;
   const lang = langOf(uid);
   const mine = store.participantsByUser(uid);
   if (mine.length === 0) {
-    await ctx.reply(t(lang, 'common.noActive'));
+    await ctx.reply(t(lang, 'common.noActive'), { reply_markup: mainMenuKeyboard(uid, lang) });
     return;
   }
   const latest = mine.reduce((a, b) => (a.createdAt >= b.createdAt ? a : b));
@@ -325,14 +323,15 @@ bot.command('leave', async (ctx) => {
   await store.save();
   await ctx.reply(
     t(lang, 'leave.confirm') + (result.dissolvedGroup ? t(lang, 'leave.groupDissolved') : ''),
-    { reply_markup: mainMenuKeyboard(lang, showLocationButton(uid)) }
+    { reply_markup: mainMenuKeyboard(uid, lang) }
   );
   await notifyLeaveResult(ctx.api, result);
 });
 
 bot.command('status', async (ctx) => {
   const uid = ctx.from!.id;
-  await ctx.reply(statusText(uid, langOf(uid)));
+  const lang = langOf(uid);
+  await ctx.reply(statusText(uid, lang), { reply_markup: mainMenuKeyboard(uid, lang) });
 });
 
 bot.command('reset', async (ctx) => {
@@ -340,7 +339,7 @@ bot.command('reset', async (ctx) => {
   const lang = langOf(uid);
   const mine = store.participantsByUser(uid);
   if (mine.length === 0) {
-    await ctx.reply(t(lang, 'common.noActive'));
+    await ctx.reply(t(lang, 'common.noActive'), { reply_markup: mainMenuKeyboard(uid, lang) });
     return;
   }
   for (const p of mine) {
@@ -348,7 +347,7 @@ bot.command('reset', async (ctx) => {
     await notifyLeaveResult(ctx.api, result);
   }
   await store.save();
-  await ctx.reply(t(lang, 'reset.done'), { reply_markup: mainMenuKeyboard(lang, showLocationButton(uid)) });
+  await ctx.reply(t(lang, 'reset.done'), { reply_markup: mainMenuKeyboard(uid, lang) });
 });
 
 bot.catch((err) => {
