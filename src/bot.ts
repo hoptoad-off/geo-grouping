@@ -78,7 +78,7 @@ bot.command('leave', async (ctx) => {
   const result = store.leave(latest.id, config.groupRadiusKm, config.groupSize);
   await store.save();
 
-  await ctx.reply('Вы вышли. ' + (result.dissolvedGroup ? 'Ваша группа распущена.' : ''));
+  await ctx.reply('Вы вышли.' + (result.dissolvedGroup ? ' Ваша группа распущена.' : ''));
   if (result.dissolvedGroup) {
     for (const m of result.dissolvedGroup.notifiedMembers) {
       await safeSend(ctx.api, m.chatId, '⚠️ Группа распалась. Ищем для вас новую…');
@@ -101,6 +101,10 @@ bot.command('status', async (ctx) => {
 
 bot.command('reset', async (ctx) => {
   const mine = store.participantsByUser(ctx.from!.id);
+  if (mine.length === 0) {
+    await ctx.reply('У вас нет активных локаций.');
+    return;
+  }
   for (const p of mine) {
     const result = store.leave(p.id, config.groupRadiusKm, config.groupSize);
     if (result.dissolvedGroup) {

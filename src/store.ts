@@ -1,4 +1,4 @@
-import { readFile, writeFile, rename } from 'node:fs/promises';
+import { readFile, writeFile, rename, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { BotState, Participant, Group } from './types.js';
@@ -180,6 +180,7 @@ export class Store {
   save(): Promise<void> {
     const attempt = this.writeChain.then(async () => {
       const tmp = `${this.filePath}.tmp`;
+      await mkdir(path.dirname(this.filePath), { recursive: true });
       await writeFile(tmp, JSON.stringify(this.state, null, 2), 'utf-8');
       await rename(tmp, this.filePath);
     });
