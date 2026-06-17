@@ -123,6 +123,12 @@ bot.on('message:text', async (ctx, next) => {
   // 1) capture a support message if we're waiting for one
   if (awaitingSupport.has(uid)) {
     const lang = langOf(uid);
+    // Tapping the Settings button cancels support capture instead of filing the label.
+    if (text === t(lang, 'btn.settings')) {
+      awaitingSupport.delete(uid);
+      await ctx.reply(t(lang, 'menu.root'), { reply_markup: inlineFrom(lang, menuScreen('root', requestStateOf(uid))) });
+      return;
+    }
     const body = text.trim();
     if (!body) {
       await ctx.reply(t(lang, 'support.prompt'));
