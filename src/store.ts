@@ -1,12 +1,21 @@
 import { readFile, writeFile, rename, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { BotState, Participant, Group, UserProfile } from './types.js';
+import type { BotState, Participant, Group, UserProfile, SupportTicket, Language } from './types.js';
 import { findGroups, optimizeGroups, type FormedGroup } from './matcher.js';
 import { CAMPUSES } from './campuses.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DEFAULT_PATH = path.resolve(__dirname, '../data/state.json');
+
+/** Fields needed to add a support ticket (id/timestamp assigned by the store). */
+export interface NewSupportTicket {
+  telegramUserId: number;
+  displayName: string;
+  phone: string;
+  language: Language;
+  text: string;
+}
 
 /** Fields needed to create a participant (ids/timestamps assigned by the store). */
 export interface NewParticipant {
@@ -17,7 +26,7 @@ export interface NewParticipant {
   lng: number;
   campusId: string;
   phone: string;
-  language: import('./types.js').Language;
+  language: Language;
 }
 
 /** A persisted group together with its resolved member participants. */
@@ -61,7 +70,7 @@ export class Store {
       state = JSON.parse(raw) as BotState;
     } catch (err) {
       if ((err as NodeJS.ErrnoException).code === 'ENOENT') {
-        state = { seq: 0, participants: [], groups: [], profiles: {}, campuses: CAMPUSES };
+        state = { seq: 0, participants: [], groups: [], profiles: {}, campuses: CAMPUSES, supportTickets: [] };
       } else {
         throw err;
       }
@@ -69,6 +78,7 @@ export class Store {
     // normalize: ensure new fields exist and campuses are canonical
     state.profiles ??= {};
     state.campuses = CAMPUSES;
+    state.supportTickets ??= [];
     return new Store(state, filePath);
   }
 
@@ -103,6 +113,37 @@ export class Store {
   /** Stores/overwrites the onboarding profile for a Telegram account. */
   setProfile(telegramUserId: number, profile: UserProfile): void {
     this.state.profiles[String(telegramUserId)] = profile;
+  }
+
+  /** True if the user has any waiting or grouped participant. */
+  hasActiveParticipant(telegramUserId: number): boolean {
+    return this.state.participants.some(
+      (p) => p.telegramUserId === telegramUserId && (p.status === 'waiting' || p.status === 'grouped')
+    );
+  }
+
+  /** Updates the user's profile language and the language of all their participants. */
+  setLanguage(telegramUserId: number, language: Language): void {
+    const profile = this.state.profiles[String(telegramUserId)];
+    if (profile) profile.language = language;
+    for (const p of this.state.participants) {
+      if (p.telegramUserId === telegramUserId) p.language = language;
+    }
+  }
+
+  /** Appends a support ticket (assigning id + timestamp) and returns it. */
+  addSupportTicket(input: NewSupportTicket): SupportTicket {
+    const ticket: SupportTicket = {
+      id: this.nextId('ticket'),
+      telegramUserId: input.telegramUserId,
+      displayName: input.displayName,
+      phone: input.phone,
+      language: input.language,
+      text: input.text,
+      createdAt: new Date().toISOString(),
+    };
+    this.state.supportTickets.push(ticket);
+    return ticket;
   }
 
   /** Drops a user's waiting participants (used in non-test mode to enforce one location). */

@@ -30,6 +30,13 @@
     .group-card ul { list-style: none; font-size: 12px; color: #c8c8d8; }
     .group-card li { padding: 1px 0; }
     .empty { font-size: 13px; color: #9090a0; }
+    .ticket-card {
+      background: #2a2a3c; border-radius: 8px; padding: 10px 12px;
+      margin-bottom: 10px; border-left: 4px solid #c62828;
+    }
+    .ticket-head { font-size: 12px; color: #e0e0e0; font-weight: 600; }
+    .ticket-time { font-size: 11px; color: #9090a0; margin: 2px 0 6px; }
+    .ticket-text { font-size: 13px; color: #c8c8d8; white-space: pre-wrap; word-break: break-word; }
     #map { flex: 1; height: 100vh; }
     .centroid-icon {
       display: flex; align-items: center; justify-content: center;
@@ -69,6 +76,8 @@
     </div>
     <button id="rebuild-btn">🔄 Пересобрать группы</button>
     <div id="groups"></div>
+    <h1 style="margin-top:20px;">🆘 Поддержка (<span id="support-count">0</span>)</h1>
+    <div id="support"></div>
   </div>
   <div id="map"></div>
   <div id="error"></div>

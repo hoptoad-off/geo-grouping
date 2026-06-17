@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { randomUUID } from 'node:crypto';
+import { writeFile } from 'node:fs/promises';
 import { Store } from './store.js';
 import type { NewParticipant } from './store.js';
 import { CAMPUSES } from './campuses.js';
@@ -21,7 +22,7 @@ function tmpPath(): string {
 test('load returns empty state for a missing file', async () => {
   const store = await Store.load(tmpPath());
   assert.deepEqual(store.getState(), {
-    seq: 0, participants: [], groups: [], profiles: {}, campuses: CAMPUSES,
+    seq: 0, participants: [], groups: [], profiles: {}, campuses: CAMPUSES, supportTickets: [],
   });
 });
 
@@ -178,4 +179,46 @@ test('getProfile/setProfile round-trip and persist', async () => {
   assert.deepEqual(reloaded.getProfile(7), {
     language: 'uz', campusId: 'yashnobod', phone: '+998901112233',
   });
+});
+
+test('hasActiveParticipant reflects waiting/grouped membership', async () => {
+  const store = await Store.load(tmpPath());
+  assert.equal(store.hasActiveParticipant(1), false);
+  store.joinAndMatch(np(41.30, 69.28, 1), 5, 3);
+  assert.equal(store.hasActiveParticipant(1), true);
+  assert.equal(store.hasActiveParticipant(2), false);
+});
+
+test('setLanguage updates profile and the user participants', async () => {
+  const store = await Store.load(tmpPath());
+  store.setProfile(1, { language: 'ru', campusId: 'mirzo_ulugbek', phone: '+998900000000' });
+  store.joinAndMatch(np(41.30, 69.28, 1), 5, 3);
+  store.setLanguage(1, 'uz');
+  assert.equal(store.getProfile(1)!.language, 'uz');
+  assert.ok(store.participantsByUser(1).every((p) => p.language === 'uz'));
+});
+
+test('addSupportTicket assigns id + timestamp and persists', async () => {
+  const file = tmpPath();
+  const store = await Store.load(file);
+  const tk = store.addSupportTicket({
+    telegramUserId: 1, displayName: 'A', phone: '+998900000000', language: 'ru', text: 'help me',
+  });
+  assert.match(tk.id, /^ticket_\d+$/);
+  assert.ok(tk.createdAt);
+  await store.save();
+  const reloaded = await Store.load(file);
+  assert.equal(reloaded.getState().supportTickets.length, 1);
+  assert.equal(reloaded.getState().supportTickets[0].text, 'help me');
+});
+
+test('load defaults supportTickets to [] for older files', async () => {
+  const file = tmpPath();
+  await writeFile(
+    file,
+    JSON.stringify({ seq: 0, participants: [], groups: [], profiles: {} }),
+    'utf-8'
+  );
+  const store = await Store.load(file);
+  assert.deepEqual(store.getState().supportTickets, []);
 });

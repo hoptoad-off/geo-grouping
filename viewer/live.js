@@ -151,6 +151,25 @@ function render(state) {
     container.appendChild(card);
   });
 
+  const tickets = (state.supportTickets || []).slice().reverse();
+  document.getElementById('support-count').textContent = String(tickets.length);
+  const supportEl = document.getElementById('support');
+  supportEl.innerHTML = '';
+  if (tickets.length === 0) {
+    supportEl.innerHTML = '<div class="empty">Нет обращений</div>';
+  }
+  for (const tk of tickets) {
+    const when = new Date(tk.createdAt).toLocaleString();
+    const card = document.createElement('div');
+    card.className = 'ticket-card';
+    card.innerHTML =
+      '<div class="ticket-head">' + esc(tk.displayName) + ' · 📞 ' + esc(tk.phone) +
+      ' · ' + esc(tk.language) + '</div>' +
+      '<div class="ticket-time">' + esc(when) + '</div>' +
+      '<div class="ticket-text">' + esc(tk.text) + '</div>';
+    supportEl.appendChild(card);
+  }
+
   if (!fitted && allLatLngs.length > 0) {
     map.fitBounds(allLatLngs, { padding: [40, 40] });
     fitted = true;
