@@ -146,6 +146,7 @@ test('GET /export/points returns a docx for the named ids', async () => {
     assert.equal(ok.headers.get('content-type'), DOCX_MIME);
 
     assert.equal((await fetch(`${base}/export/points`)).status, 400);
+    assert.equal((await fetch(`${base}/export/points?ids=u_001,u_002`, { method: 'POST' })).status, 405);
   } finally {
     server.close();
   }
@@ -157,6 +158,7 @@ test('export routes return 503 when state file is unreadable', async () => {
   try {
     const r = await fetch(`http://127.0.0.1:${port}/export/point?id=u_001`);
     assert.equal(r.status, 503);
+    assert.equal((await fetch(`http://127.0.0.1:${port}/export/points?ids=u_001`)).status, 503);
   } finally {
     server.close();
   }
