@@ -2,6 +2,8 @@ import { createServer, type Server } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { buildPointDoc, buildPointsDoc } from './word-export.js';
+import type { Participant } from './types.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -14,6 +16,20 @@ const MIME: Record<string, string> = {
   '.png': 'image/png',
   '.svg': 'image/svg+xml',
 };
+
+const DOCX_MIME =
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+
+/** Writes a generated docx Buffer as a download response. */
+function sendDocx(res: import('node:http').ServerResponse, buf: Buffer, filename: string): void {
+  res.writeHead(200, {
+    'Content-Type': DOCX_MIME,
+    'Content-Disposition': `attachment; filename="${filename}"`,
+    'Cache-Control': 'no-store',
+    'X-Content-Type-Options': 'nosniff',
+  });
+  res.end(buf);
+}
 
 /** Options for the viewer HTTP server. */
 export interface ViewerServerOptions {
@@ -40,6 +56,7 @@ export interface ViewerServerOptions {
  * @returns An http.Server (not yet listening — caller calls .listen).
  */
 export function createViewerServer(options: ViewerServerOptions = {}): Server {
+  const statePath = options.statePath ?? path.join(ROOT, 'data', 'state.json');
   return createServer(async (req, res) => {
     const url = new URL(req.url ?? '/', 'http://localhost');
 
@@ -77,6 +94,51 @@ export function createViewerServer(options: ViewerServerOptions = {}): Server {
         res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
         res.end(JSON.stringify({ ok: false }));
       }
+      return;
+    }
+
+    if (url.pathname === '/export/point' || url.pathname === '/export/points') {
+      if (req.method !== 'GET') {
+        res.writeHead(405).end('Method Not Allowed');
+        return;
+      }
+      let participants: Participant[];
+      try {
+        const state = JSON.parse(await readFile(statePath, 'utf8'));
+        participants = (state.participants ?? []) as Participant[];
+      } catch {
+        res.writeHead(503, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ ok: false, error: 'state unavailable' }));
+        return;
+      }
+
+      if (url.pathname === '/export/point') {
+        const id = url.searchParams.get('id');
+        if (!id) {
+          res.writeHead(400).end('Missing id');
+          return;
+        }
+        const p = participants.find((x) => x.id === id);
+        if (!p) {
+          res.writeHead(404).end('Not found');
+          return;
+        }
+        sendDocx(res, await buildPointDoc(p), `point-${id}.docx`);
+        return;
+      }
+
+      // /export/points
+      const idsParam = url.searchParams.get('ids');
+      if (!idsParam || !idsParam.trim()) {
+        res.writeHead(400).end('Missing ids');
+        return;
+      }
+      const ids = idsParam.split(',').map((s) => s.trim()).filter(Boolean);
+      const byId = new Map(participants.map((p) => [p.id, p]));
+      const selected = ids
+        .map((id) => byId.get(id))
+        .filter((p): p is Participant => Boolean(p));
+      sendDocx(res, await buildPointsDoc(selected), `points-${selected.length}.docx`);
       return;
     }
 
