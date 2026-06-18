@@ -6,7 +6,7 @@ const PORT = Number(process.env.PORT) || 8080;
 const HOST = process.env.HOST || '127.0.0.1';
 
 // Standalone batch viewer: no rebuild handler (that lives in the bot process).
-createViewerServer().listen(PORT, HOST, () => {
+createViewerServer({ adminToken: process.env.ADMIN_TOKEN }).listen(PORT, HOST, () => {
   console.log(`✓ Viewer running at http://${HOST}:${PORT}`);
   console.log('  (Ctrl+C to stop)');
 });
