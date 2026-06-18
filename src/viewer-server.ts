@@ -22,6 +22,13 @@ export interface ViewerServerOptions {
    * its result as JSON. When omitted, `/rebuild` responds 404 (batch viewer).
    */
   rebuild?: () => Promise<{ changed: number }>;
+  /**
+   * When set, protects data + action routes (state.json, exports, rebuild) with
+   * `Authorization: Bearer <token>`. When omitted, those routes are open.
+   */
+  adminToken?: string;
+  /** Path to the bot state JSON. Defaults to `<root>/data/state.json`. */
+  statePath?: string;
 }
 
 /**
@@ -35,6 +42,19 @@ export interface ViewerServerOptions {
 export function createViewerServer(options: ViewerServerOptions = {}): Server {
   return createServer(async (req, res) => {
     const url = new URL(req.url ?? '/', 'http://localhost');
+
+    // Token guard: when adminToken is configured, data + action routes require
+    // a bearer token. Static assets (the page shell, scripts, output.json) stay
+    // open — they carry no participant data.
+    const PROTECTED = new Set([
+      '/data/state.json', '/export/point', '/export/points', '/rebuild',
+    ]);
+    if (options.adminToken && PROTECTED.has(url.pathname)) {
+      if (req.headers['authorization'] !== `Bearer ${options.adminToken}`) {
+        res.writeHead(401, { 'WWW-Authenticate': 'Bearer' }).end('Unauthorized');
+        return;
+      }
+    }
 
     if (url.pathname === '/rebuild') {
       if (!options.rebuild) {

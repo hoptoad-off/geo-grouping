@@ -60,3 +60,36 @@ test('without a rebuild handler, /rebuild is 404', async () => {
     server.close();
   }
 });
+
+test('adminToken protects state.json + rebuild; static stays open', async () => {
+  const server = createViewerServer({
+    adminToken: 'secret123',
+    rebuild: async () => ({ changed: 0 }),
+  });
+  const port = await listen(server);
+  const base = `http://127.0.0.1:${port}`;
+  try {
+    // No token → 401 on protected routes.
+    assert.equal((await fetch(`${base}/data/state.json`)).status, 401);
+    assert.equal((await fetch(`${base}/rebuild`, { method: 'POST' })).status, 401);
+
+    // Wrong token → 401.
+    assert.equal(
+      (await fetch(`${base}/data/state.json`, { headers: { Authorization: 'Bearer nope' } })).status,
+      401,
+    );
+
+    // Correct token → not 401 (rebuild succeeds).
+    const ok = await fetch(`${base}/rebuild`, {
+      method: 'POST',
+      headers: { Authorization: 'Bearer secret123' },
+    });
+    assert.equal(ok.status, 200);
+
+    // Static asset is reachable without a token.
+    const live = await fetch(`${base}/live`);
+    assert.equal(live.status, 200);
+  } finally {
+    server.close();
+  }
+});
