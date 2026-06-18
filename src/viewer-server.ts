@@ -20,6 +20,11 @@ const MIME: Record<string, string> = {
 const DOCX_MIME =
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
 
+/** Routes that require authentication when adminToken is configured. */
+const PROTECTED = new Set([
+  '/data/state.json', '/export/point', '/export/points', '/rebuild',
+]);
+
 /** Writes a generated docx Buffer as a download response. */
 function sendDocx(res: import('node:http').ServerResponse, buf: Buffer, filename: string): void {
   res.writeHead(200, {
@@ -63,9 +68,6 @@ export function createViewerServer(options: ViewerServerOptions = {}): Server {
     // Token guard: when adminToken is configured, data + action routes require
     // a bearer token. Static assets (the page shell, scripts, output.json) stay
     // open — they carry no participant data.
-    const PROTECTED = new Set([
-      '/data/state.json', '/export/point', '/export/points', '/rebuild',
-    ]);
     if (options.adminToken && PROTECTED.has(url.pathname)) {
       if (req.headers['authorization'] !== `Bearer ${options.adminToken}`) {
         res.writeHead(401, { 'WWW-Authenticate': 'Bearer' }).end('Unauthorized');
@@ -79,7 +81,7 @@ export function createViewerServer(options: ViewerServerOptions = {}): Server {
         return;
       }
       if (req.method !== 'POST') {
-        res.writeHead(405).end('Method Not Allowed');
+        res.writeHead(405, { Allow: 'POST' }).end('Method Not Allowed');
         return;
       }
       try {
@@ -99,7 +101,7 @@ export function createViewerServer(options: ViewerServerOptions = {}): Server {
 
     if (url.pathname === '/export/point' || url.pathname === '/export/points') {
       if (req.method !== 'GET') {
-        res.writeHead(405).end('Method Not Allowed');
+        res.writeHead(405, { Allow: 'GET' }).end('Method Not Allowed');
         return;
       }
       let participants: Participant[];
