@@ -357,6 +357,7 @@ bot.catch((err) => {
 const VIEWER_PORT = Number(process.env.PORT) || 8080;
 const VIEWER_HOST = process.env.HOST || '127.0.0.1';
 const viewer = createViewerServer({
+  adminToken: process.env.ADMIN_TOKEN,
   rebuild: async () => {
     const result = store.rebuild(config.groupRadiusKm, config.groupSize);
     await store.save();
